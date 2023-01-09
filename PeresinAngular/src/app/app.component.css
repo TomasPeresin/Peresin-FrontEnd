@@ -9,7 +9,7 @@
   .foto-carnet{
     width: 150px;
     height: 150px;
-    background-image: url(./img307.jpg);
+    background-image: url(../assets/img307.jpg);
     background-size: cover;
     border-radius: 50%;
   }
