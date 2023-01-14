@@ -28,8 +28,11 @@
             </a>
           </li>
         </ul>
-        <button type="button" class="btn btn-success" (click)="Login()">
-          Login
+        <button type="button" class="btn btn-success" (click)="Login()" *ngIf="!isLogged">
+          Ingresar sesion
+        </button>
+        <button type="button" class="btn btn-warning" (click)="onLogOut()" *ngIf="isLogged">
+          Cerrar sesion
         </button>
       </div>
     </div>

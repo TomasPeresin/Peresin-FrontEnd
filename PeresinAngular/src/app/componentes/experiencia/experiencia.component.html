@@ -1,9 +1,35 @@
 <div class="container-fluid">
+  <div class="row">
     <h2>-Experiencia Laboral</h2>
-  <div class="row">
-    <h5>Sinapsis</h5>
-  </div>
-  <div class="row">
-    <p>Pasantia en Noviembre de 2017 como reparador de PC</p>
+    <div class="col-lg-2">
+      <button type="button" class="btn btn-light" routerLink="/nuevaexp" *ngIf="isLogged">
+        Nueva Experiencia
+      </button>
+    </div>
+      <div class="col-1"></div>
+      <div class="col-11">
+        <table class="table">
+            <tbody>
+              <tr *ngFor="let Experiencia of expe">
+                <!--Nombre de la experiencia-->
+                <td><h5>{{Experiencia.nombreE}}</h5></td>
+                <!-- Descripcion de la experiencia-->
+                <td>{{Experiencia.descripcionE}}</td>
+                <!--Editar-->
+                <td *ngIf="isLogged">
+                  <button class="btn btn-light" type="button" routerLink="/editexp/{{Experiencia.id}}">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                </td>
+                <!--Borrar-->
+                <td *ngIf="isLogged">
+                  <button class="btn btn-danger" type="button" (click)="delete(Experiencia.id)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button></td>
+              </tr>
+            </tbody>
+        </table>
+
+      </div>
   </div>
 </div>
