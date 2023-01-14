@@ -8,7 +8,7 @@ import { SExperienciaService } from 'src/app/service/s-experiencia.service';
   templateUrl: './edit-experiencia.component.html',
   styleUrls: ['./edit-experiencia.component.css']
 })
-export class EditExperienciaComponent  implements OnInit{
+export class EditExperienciaComponent implements OnInit{
   expLab: Experiencia = null;
   constructor(private sExperiencia: SExperienciaService, private activatedRouter: ActivatedRoute, private router: Router){
   }

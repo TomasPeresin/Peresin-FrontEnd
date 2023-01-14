@@ -1,39 +1,35 @@
 <div class="container-fluid">
-    <h2>-Educación</h2>
-    <div class="row">
-    <h5>Escuela Santa Rosa de Viterbo,
-    Bachiller en economía y administración</h5>
+  <div class="row">
+    <h2>-Educacion</h2>
+    <div class="col-lg-2">
+      <button type="button" class="btn btn-light" routerLink="/nuevaedu" *ngIf="isLogged">
+        Agregar educacion
+      </button>
     </div>
-    <div class="row">
-    <p>Egresado en 2017</p>
-    </div>
+      <div class="col-1"></div>
+      <div class="col-11">
+        <table class="table">
+            <tbody>
+              <tr *ngFor="let Educacion of educacion">
+                <!--Nombre de la educacion-->
+                <td><h5>{{Educacion.nombreE}}</h5></td>
+                <!-- Descripcion de la educacion-->
+                <td>{{Educacion.descripcionE}}</td>
+                <!--Editar-->
+                <td *ngIf="isLogged">
+                  <button class="btn btn-light" type="button" routerLink="/editedu/{{Educacion.id}}">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                </td>
+                <!--Borrar-->
+                <td *ngIf="isLogged">
+                  <button class="btn btn-danger" type="button" (click)="delete(Educacion.id)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button></td>
+              </tr>
+            </tbody>
+        </table>
 
-    <div class="row">
-    <h5>Ingenieria en Sistemas, Universidad Tecnologica Nacional Rosario</h5>
-    </div>
-    <div class="row">
-    <p>En curso</p>
-    </div>
-
-    <div class="row">
-    <h5>CEA, Titulo reparador de PC</h5>
-    </div>
-    <div class="row">
-    <p>Completado en 2017</p>
-    </div>
-    <div>
-        <div class="row">
-          <h5>Lenguaje orientados a objetos, Materia de ISI enfocada en el paradigma de programacion</h5>
-        </div>
-        <div class="row">
-          <p>Materia aprobada</p>
-        </div>
-      
-        <div class="row">
-          <h5>Gestion de datos, Materia enfocada en bases de datos</h5>
-        </div>
-        <div class="row">
-          <p>Materia aprobada</p>
-        </div>
       </div>
+  </div>
 </div>
