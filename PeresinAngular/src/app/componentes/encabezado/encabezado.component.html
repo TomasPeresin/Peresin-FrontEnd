@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-sm" style="background-color: #a1b5cb;">
+<nav class="navbar navbar-expand-sm" style="background-color: #FB8500" >
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
-      <img src="https://desa.argentinaprograma.inti.gob.ar/pluginfile.php/1/theme_moove/logo/1660276176/APLogo-20-20.png" alt="#YoProgramo" width="auto" height="60px" id="APlogo">
+      <img src="../../../assets/APLogo.png" alt="#YoProgramo" width="auto" height="60px" id="APlogo">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
       <span class="navbar-toggler-icon"></span>
@@ -24,10 +24,10 @@
             </a>
           </li>
         </ul>
-        <button type="button" class="btn btn-success" (click)="Login()" *ngIf="!isLogged">
-          Ingresar sesion
+        <button type="button" class="btn btn-success btn" (click)="Login()" *ngIf="!isLogged">
+          Iniciar sesion
         </button>
-        <button type="button" class="btn btn-warning" (click)="onLogOut()" *ngIf="isLogged">
+        <button type="button" class="btn btn-succes btn" (click)="onLogOut()" *ngIf="isLogged">
           Cerrar sesion
         </button>
       </div>

@@ -5,7 +5,7 @@
     height: 150px;
     background-size: cover;
     border-radius: 50%;
-    bottom: 55%;
+    bottom: 1px;
   }
 }
   @media (max-width: 576px){
@@ -21,13 +21,9 @@
 
 .banner{
     width: 100%;
-    height: 600px;
+    height: 700px;
     position: relative;
   }
-
-div{
-  background-color: #a1b5cb;
-}
 
 #nombre{
   font-weight: bold;
