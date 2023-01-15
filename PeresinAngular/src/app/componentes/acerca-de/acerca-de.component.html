@@ -7,7 +7,7 @@
         <div class="col-1">
         </div>
         <div class="col-3">
-            <img src="../../../assets/img307.jpg" alt="foto-carnet" id="foto-perfil">
+            <img src="{{persona.img}}" alt="foto-carnet" id="foto-perfil">
         </div>
         <div class="col-8 align-middle">
             <h1> Full Stack Developer Jr </h1>
@@ -19,8 +19,7 @@
             <p id="nombre">{{persona.nombre}} {{persona.apellido}}</p>
         </div>
         <div class="col-8 align-middle">
-            <p> Soy un joven estudiante de sistemas que encontro un gusto en la programacion y en ayudar
-            a las personas facilitandoles sus vidas. </p>
+            <p> {{persona.descripcion}}</p>
         </div>
     </div>
 </div>
