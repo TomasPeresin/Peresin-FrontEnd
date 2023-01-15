@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-sm" style="background-color: #FB8500" >
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="../../../assets/APLogo.png" alt="#YoProgramo" width="auto" height="60px" id="APlogo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="https://www.instagram.com/tomas_prsn/" target="_blank">
+              <i class="bi bi-instagram"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="https://github.com/TomasPeresin" target="_blank">
+              <i class="bi bi-github"></i>
+            </a>
+          </li>
+        </ul>
+        <button type="button" class="btn btn-success btn" (click)="Login()" *ngIf="!isLogged">
+          Iniciar sesion
+        </button>
+        <button type="button" class="btn btn-succes btn" (click)="onLogOut()" *ngIf="isLogged">
+          Cerrar sesion
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

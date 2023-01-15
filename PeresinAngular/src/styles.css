@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+div{
+    background-color: #339bd7;
+  }
+
+table, td{
+  border: 1px solid black;
+  border-color: #219EBC;
+  border-top-color: #219EBC;
+}
