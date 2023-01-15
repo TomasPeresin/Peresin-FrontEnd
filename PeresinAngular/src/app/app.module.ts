@@ -47,7 +47,22 @@ import { EditSkillComponent } from './componentes/skills/edit-skill.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgCircleProgressModule.forRoot({}),
+    NgCircleProgressModule.forRoot({
+      backgroundColor:"#FDB900",
+      showUnits:false,
+      animationDuration:900,
+      radius:60,
+      maxPercent:100,
+      unitsColor:"#483500",
+      outerStrokeWidth:5,
+      outerStrokeColor:"#FFFFFF",
+      innerStrokeColor:"#FFFFFF",
+      titleColor:"#483500",
+      subtitleColor:"#483500",
+      showSubtitle:false,
+      showInnerStroke:false,
+      startFromZero:false,
+    }),
     HttpClientModule,
     FormsModule
   ],
