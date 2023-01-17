@@ -7,7 +7,7 @@ import { Experiencia } from '../model/experiencia';
   providedIn: 'root'
 })
 export class SExperienciaService {
-  expURL = 'http://backendpti.onrender.com/explab/'
+  expURL = 'https://backendpti.onrender.com/explab/'
   constructor(private httpClient : HttpClient) { }
 
   public lista(): Observable<Experiencia[]>{
