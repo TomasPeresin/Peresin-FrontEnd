@@ -1,14 +1,16 @@
-<div class="container-fluid">
-  <div class="row">
-    <h2>-Educacion</h2>
-    <div class="col-lg-2">
-      <button type="button" class="btn btn-light" routerLink="/nuevaedu" *ngIf="isLogged">
-        Agregar educacion
-      </button>
-    </div>
-      <div class="col-1"></div>
-      <div class="col-11">
-        <table class="table">
+<div class="row">
+  <div class="col-12">
+    <div class="container-fluid">
+      <div class="row">
+        <h2>-Educacion</h2>
+        <div class="col-lg-2">
+          <button type="button" class="btn btn-light" routerLink="/nuevaedu" *ngIf="isLogged">
+            Agregar educacion
+          </button>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-11">
+          <table class="table">
             <tbody>
               <tr *ngFor="let Educacion of educacion">
                 <!--Nombre de la educacion-->
@@ -28,8 +30,10 @@
                   </button></td>
               </tr>
             </tbody>
-        </table>
+          </table>
 
+        </div>
       </div>
+    </div>
   </div>
 </div>
