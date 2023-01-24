@@ -13,10 +13,16 @@
           <table class="table">
             <tbody>
               <tr *ngFor="let Educacion of educacion">
-                <!--Nombre de la educacion-->
-                <td><h5>{{Educacion.nombreE}}</h5></td>
-                <!-- Descripcion de la educacion-->
-                <td>{{Educacion.descripcionE}}</td>
+                <!--Nombre de la institucion-->
+                <td><h5>{{Educacion.institucionE}}</h5></td>
+                <!-- Titulo de la educacion-->
+                <td>{{Educacion.tituloE}}</td>
+                <!-- Estado del titulo-->
+                <td>{{Educacion.estadoE}}</td>
+                <!-- Fecha de inicio de la educacion-->
+                <td>{{Educacion.fechaInicio}}</td>
+                <!-- Fecha fin del titulo-->
+                <td>{{Educacion.fechaFin}}</td>
                 <!--Editar-->
                 <td *ngIf="isLogged">
                   <button class="btn btn-light" type="button" routerLink="/editedu/{{Educacion.id}}">

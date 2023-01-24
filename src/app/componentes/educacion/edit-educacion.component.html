@@ -6,15 +6,25 @@
             <div class="card-body p-5 text-center">
               <h3 class="mb-5">Añadir educacion</h3>
               <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
-
                 <div class="form-outline mb-4">
-                    <input type="text" id="nombreE" name="nombreE" class="form-control form-control-lg" [(ngModel)]="eduLab.nombreE" required/>
-                    <label for="nombreE">Nombre de la institucion</label>
+                    <input type="text" id="institucionE" name="institucionE" class="form-control form-control-lg" [(ngModel)]="eduLab.institucionE" required/>
+                    <label for="institucionE">Nombre de la institucion</label>
                 </div>
-    
                 <div class="form-outline mb-4">
-                    <input type="descripcionE" id="descripcionE" class="form-control form-control-lg" [(ngModel)]="eduLab.descripcionE" required />
-                    <label class="form-label" for="descripcionE">Titulo</label>
+                    <input type="text" id="tituloE" class="form-control form-control-lg" [(ngModel)]="eduLab.tituloE" required />
+                    <label class="form-label" for="tituloE">Titulo</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="text" id="estadoE" name="estadoE" class="form-control form-control-lg" [(ngModel)]="eduLab.estadoE" required/>
+                    <label for="estadoE">Estado de la educacion (Finalizado/Cursando)</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="number" id="fechaInicio" class="form-control form-control-lg " min="1960" max="2023" [(ngModel)]="eduLab.fechaInicio" required />
+                    <label class="form-label" for="fechaInicio">Fecha inicio del cursado</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="number" id="fechaFin" class="form-control form-control-lg" min="1960" max="2023" [(ngModel)]="eduLab.fechaFin" required />
+                    <label class="form-label" for="fechaFin">Fecha fin del cursado</label>
                 </div>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Actualizar educacion</button>
               </form>

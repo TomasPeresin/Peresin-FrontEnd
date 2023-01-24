@@ -6,15 +6,25 @@
             <div class="card-body p-5 text-center">
               <h3 class="mb-5">Agregar educacion</h3>
               <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-
                 <div class="form-outline mb-4">
-                    <input type="text" id="nombreE" name="nombreE" class="form-control form-control-lg" [(ngModel)]="nombreE" required/>
-                    <label for="nombreE">Institucion</label>
+                    <input type="text" id="institucionE" name="institucionE" class="form-control form-control-lg" [(ngModel)]="institucionE" required/>
+                    <label for="institucionE">Nombre de la institucion</label>
                 </div>
-    
                 <div class="form-outline mb-4">
-                    <input type="descripcionE" id="descripcionE" name="descripcionE" class="form-control form-control-lg" [(ngModel)]="descripcionE" required />
-                    <label class="form-label" for="descripcionE">Titulo</label>
+                    <input type="text" id="tituloE" name="tituloE" class="form-control form-control-lg" [(ngModel)]="tituloE" required />
+                    <label class="form-label" for="tituloE">Titulo</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="text" id="estadoE" name="estadoE" class="form-control form-control-lg" [(ngModel)]="estadoE" required/>
+                    <label for="estadoE">Estado de la educacion (Finalizado/Cursando)</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="number" id="fechaInicio" name="fechaInicio" class="form-control form-control-lg " min="1960" max="2023" [(ngModel)]="fechaInicio" required />
+                    <label class="form-label" for="fechaInicio">Fecha inicio del cursado</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="number" id="fechaFin" name="fechaFin" class="form-control form-control-lg" min="1960" max="2023" [(ngModel)]="fechaFin" required />
+                    <label class="form-label" for="fechaFin">Fecha fin del cursado</label>
                 </div>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir educacion</button>
               </form>

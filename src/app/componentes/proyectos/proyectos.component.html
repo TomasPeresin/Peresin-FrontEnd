@@ -1,19 +1,44 @@
 <div class="row">
   <div class="col-12">
     <div class="container-fluid">
+      <div class="row">
         <h2>-Proyectos</h2>
-      <div class="row"> 
-        <h3>Portfolio Web</h3> <h4>2022/2023</h4> 
+        <div class="col-lg-2">
+            <button type="button" class="btn btn-light" routerLink="/nuevoproyecto" *ngIf="isLogged">
+              Nuevo proyecto
+            </button>
+        </div>
       </div>
-      <div class="row">
-        <p>
-          Entre mitad y fin de 2022 e inicios de 2023 participe en Argentina Programa, aprendiendo a desarrollar y desplegar
-          un portfolio web desde el back-end hasta el front-end, que estes aca es la prueba de ello.
-        </p>
-      </div>
-      <div class="row">
-        <img>
-      </div>
+      <table class="table"> 
+        <tbody>
+        <tr *ngFor="let Proyecto of proyectos">
+          <td>
+            <h3>{{Proyecto.nombre}}</h3>
+          </td>
+          <td>
+            <h4>{{Proyecto.fecha}}</h4>
+          </td>
+          <td><p>{{Proyecto.descripcion}}</p></td>
+          <td>
+            <p>Link: </p>
+            <a href="{{Proyecto.link}}">
+              <p>Añadir algo</p>
+            </a>
+          </td>
+          <td *ngIf="isLogged">
+            <button class="btn btn-light" type="button" routerLink="/editskill/{{Proyecto.id}}">
+              <i class="bi bi-pencil-fill"></i>
+            </button>
+          </td>
+            <!--Borrar-->
+          <td *ngIf="isLogged">
+            <button class="btn btn-danger" type="button" (click)="delete(Proyecto.id)">
+              <i class="bi bi-trash3-fill"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

@@ -7,7 +7,8 @@ import { Hardysoft } from '../model/hardysoft';
   providedIn: 'root'
 })
 export class SHysskillsService {
-  hysURL = 'https://backendpti.onrender.com/skill/'
+  //hysURL = 'https://backendpti.onrender.com/skill/'
+  hysURL = 'http://localhost:8080/skill/';
   constructor(private httpClient : HttpClient) { }
 
   public lista(): Observable<Hardysoft[]>{
