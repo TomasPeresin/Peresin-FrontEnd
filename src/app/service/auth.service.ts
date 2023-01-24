@@ -9,8 +9,8 @@ import { NuevoUsuario } from '../model/nuevo-usuario';
   providedIn: 'root'
 })
 export class AuthService {
-  //authURL = 'https://backendpti.onrender.com/auth/';
-  authURL = 'http://localhost:8080/auth/';
+  authURL = 'https://backendpti.onrender.com/auth/';
+  //authURL = 'http://localhost:8080/auth/';
 
   constructor(private httpClient: HttpClient) { }
 
