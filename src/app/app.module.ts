@@ -12,7 +12,7 @@ import { SkillsComponent } from './componentes/skills/skills.component';
 import { ProyectosComponent } from './componentes/proyectos/proyectos.component';
 import { PieComponent } from './componentes/pie/pie.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HomeComponent } from './componentes/home/home.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { FormsModule } from '@angular/forms';
@@ -27,37 +27,31 @@ import { NewProyectosComponent } from './componentes/proyectos/new-proyectos.com
 import { EditProyectoComponent } from './componentes/proyectos/edit-proyecto.component';
 import { SignInComponent } from './componentes/sign-in/sign-in.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    EncabezadoComponent,
-    AcercaDeComponent,
-    ExperienciaComponent,
-    EducacionComponent,
-    SkillsComponent,
-    ProyectosComponent,
-    PieComponent,
-    HomeComponent,
-    LoginComponent,
-    NewExperienciaComponent,
-    EditExperienciaComponent,
-    NewEducacionComponent,
-    EditEducacionComponent,
-    NewSkillsComponent,
-    EditSkillComponent,
-    NewProyectosComponent,
-    EditProyectoComponent,
-    SignInComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
-  providers: [
-    interceptorProvider,
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        EncabezadoComponent,
+        AcercaDeComponent,
+        ExperienciaComponent,
+        EducacionComponent,
+        SkillsComponent,
+        ProyectosComponent,
+        PieComponent,
+        HomeComponent,
+        LoginComponent,
+        NewExperienciaComponent,
+        EditExperienciaComponent,
+        NewEducacionComponent,
+        EditEducacionComponent,
+        NewSkillsComponent,
+        EditSkillComponent,
+        NewProyectosComponent,
+        EditProyectoComponent,
+        SignInComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule], providers: [
+        interceptorProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
