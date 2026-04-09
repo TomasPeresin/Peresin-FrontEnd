@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Experiencia } from '../model/experiencia';
+import { AppConfig } from '../core/config/app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SExperienciaService {
-  expURL = 'https://backendpti.onrender.com/explab/'
-  //expURL = 'http://localhost:8080/explab/';
+  expURL = `${AppConfig.url}/explab/`;
   constructor(private httpClient : HttpClient) { }
 
   public lista(): Observable<Experiencia[]>{

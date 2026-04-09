@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Proyecto } from '../model/proyecto';
+import { AppConfig } from '../core/config/app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SProyectoService {
-  URL = 'https://backendpti.onrender.com/proyecto/'
-  //URL = 'http://localhost:8080/proyecto/';
+  URL = `${AppConfig.url}/proyecto/`;
   constructor(private httpClient : HttpClient) { }
 
   public lista(): Observable<Proyecto[]>{
