@@ -4,9 +4,10 @@ import { Proyecto } from 'src/app/model/proyecto';
 import { SProyectoService } from 'src/app/service/s-proyecto.service';
 
 @Component({
-  selector: 'app-new-proyectos',
-  templateUrl: './new-proyectos.component.html',
-  styleUrls: ['./new-proyectos.component.css']
+    selector: 'app-new-proyectos',
+    templateUrl: './new-proyectos.component.html',
+    styleUrls: ['./new-proyectos.component.css'],
+    standalone: false
 })
 export class NewProyectosComponent implements OnInit{
   nombre: String = '';

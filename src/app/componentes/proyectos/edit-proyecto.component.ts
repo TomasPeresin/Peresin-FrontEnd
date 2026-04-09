@@ -4,9 +4,10 @@ import { Proyecto } from 'src/app/model/proyecto';
 import { SProyectoService } from 'src/app/service/s-proyecto.service';
 
 @Component({
-  selector: 'app-edit-proyecto',
-  templateUrl: './edit-proyecto.component.html',
-  styleUrls: ['./edit-proyecto.component.css']
+    selector: 'app-edit-proyecto',
+    templateUrl: './edit-proyecto.component.html',
+    styleUrls: ['./edit-proyecto.component.css'],
+    standalone: false
 })
 export class EditProyectoComponent implements OnInit{
   proyectoLab: Proyecto = null;

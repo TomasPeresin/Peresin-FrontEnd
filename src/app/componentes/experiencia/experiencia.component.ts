@@ -4,9 +4,10 @@ import { SExperienciaService } from 'src/app/service/s-experiencia.service';
 import { TokenService } from 'src/app/service/token.service';
 
 @Component({
-  selector: 'app-experiencia',
-  templateUrl: './experiencia.component.html',
-  styleUrls: ['./experiencia.component.css']
+    selector: 'app-experiencia',
+    templateUrl: './experiencia.component.html',
+    styleUrls: ['./experiencia.component.css'],
+    standalone: false
 })
 export class ExperienciaComponent implements OnInit {
   expe: Experiencia[] = [];

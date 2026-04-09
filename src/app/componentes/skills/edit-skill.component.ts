@@ -4,9 +4,10 @@ import { Hardysoft } from 'src/app/model/hardysoft';
 import { SHysskillsService } from 'src/app/service/s-hysskills.service';
 
 @Component({
-  selector: 'app-edit-skill',
-  templateUrl: './edit-skill.component.html',
-  styleUrls: ['./edit-skill.component.css']
+    selector: 'app-edit-skill',
+    templateUrl: './edit-skill.component.html',
+    styleUrls: ['./edit-skill.component.css'],
+    standalone: false
 })
 export class EditSkillComponent implements OnInit{
   skillLab: Hardysoft = null;

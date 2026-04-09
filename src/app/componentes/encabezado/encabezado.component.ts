@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { TokenService } from 'src/app/service/token.service';
 
 @Component({
-  selector: 'app-encabezado',
-  templateUrl: './encabezado.component.html',
-  styleUrls: ['./encabezado.component.css']
+    selector: 'app-encabezado',
+    templateUrl: './encabezado.component.html',
+    styleUrls: ['./encabezado.component.css'],
+    standalone: false
 })
 export class EncabezadoComponent implements OnInit {
   isLogged = false;
