@@ -8,7 +8,6 @@ import { AcercaDeComponent } from './componentes/acerca-de/acerca-de.component';
 import { ExperienciaComponent } from './componentes/experiencia/experiencia.component';
 import { EducacionComponent } from './componentes/educacion/educacion.component';
 
-import { NgCircleProgressModule } from 'ng-circle-progress';
 import { SkillsComponent } from './componentes/skills/skills.component';
 import { ProyectosComponent } from './componentes/proyectos/proyectos.component';
 import { PieComponent } from './componentes/pie/pie.component';
@@ -53,22 +52,6 @@ import { SignInComponent } from './componentes/sign-in/sign-in.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgCircleProgressModule.forRoot({
-      backgroundColor:"#FDB900",
-      showUnits:false,
-      animationDuration:900,
-      radius:60,
-      maxPercent:100,
-      unitsColor:"#483500",
-      outerStrokeWidth:5,
-      outerStrokeColor:"#FFFFFF",
-      innerStrokeColor:"#FFFFFF",
-      titleColor:"#483500",
-      subtitleColor:"#483500",
-      showSubtitle:false,
-      showInnerStroke:false,
-      startFromZero:false,
-    }),
     HttpClientModule,
     FormsModule
   ],
