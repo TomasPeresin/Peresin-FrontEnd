@@ -4,42 +4,50 @@
       <div class="row">
         <h2>-Educacion</h2>
         <div class="col-lg-2">
-          <button type="button" class="btn btn-light" routerLink="/nuevaedu" *ngIf="isLogged">
-            Agregar educacion
-          </button>
+          @if (isLogged) {
+            <button type="button" class="btn btn-light" routerLink="/nuevaedu">
+              Agregar educacion
+            </button>
+          }
         </div>
         <div class="col-1"></div>
         <div class="col-11">
           <table class="table">
             <tbody>
-              <tr *ngFor="let Educacion of educacion">
-                <!--Nombre de la institucion-->
-                <td><h5>{{Educacion.institucionE}}</h5></td>
-                <!-- Titulo de la educacion-->
-                <td>{{Educacion.tituloE}}</td>
-                <!-- Estado del titulo-->
-                <td>{{Educacion.estadoE}}</td>
-                <!-- Fecha de inicio de la educacion-->
-                <td>{{Educacion.fechaInicio}}</td>
-                <!-- Fecha fin del titulo-->
-                <td>{{Educacion.fechaFin}}</td>
-                <!--Editar-->
-                <td *ngIf="isLogged">
-                  <button class="btn btn-light" type="button" routerLink="/editedu/{{Educacion.id}}">
-                    <i class="bi bi-pencil-fill"></i>
-                  </button>
-                </td>
-                <!--Borrar-->
-                <td *ngIf="isLogged">
-                  <button class="btn btn-danger" type="button" (click)="delete(Educacion.id)">
-                    <i class="bi bi-trash3-fill"></i>
-                  </button></td>
-              </tr>
-            </tbody>
-          </table>
+              @for (Educacion of educacion; track Educacion) {
+                <tr>
+                  <!--Nombre de la institucion-->
+                  <td><h5>{{Educacion.institucionE}}</h5></td>
+                  <!-- Titulo de la educacion-->
+                  <td>{{Educacion.tituloE}}</td>
+                  <!-- Estado del titulo-->
+                  <td>{{Educacion.estadoE}}</td>
+                  <!-- Fecha de inicio de la educacion-->
+                  <td>{{Educacion.fechaInicio}}</td>
+                  <!-- Fecha fin del titulo-->
+                  <td>{{Educacion.fechaFin}}</td>
+                  <!--Editar-->
+                  @if (isLogged) {
+                    <td>
+                      <button class="btn btn-light" type="button" routerLink="/editedu/{{Educacion.id}}">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                    </td>
+                  }
+                  <!--Borrar-->
+                  @if (isLogged) {
+                    <td>
+                      <button class="btn btn-danger" type="button" (click)="delete(Educacion.id)">
+                        <i class="bi bi-trash3-fill"></i>
+                      </button></td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
 
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>

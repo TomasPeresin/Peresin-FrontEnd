@@ -4,25 +4,31 @@
       <div class="row">
         <h2>-Soft/Hard Skills</h2>
         <div class="col-lg-2">
-            <button type="button" class="btn btn-light" routerLink="/nuevaskill" *ngIf="isLogged">
+          @if (isLogged) {
+            <button type="button" class="btn btn-light" routerLink="/nuevaskill">
               Nueva skill
             </button>
+          }
         </div>
-        </div>
-        <div class="row">
-          <div class="text-center col-sm-6 col-md-4 col-lg-3" *ngFor="let Skills of skill">
-              <!--Editar-->
-              <div *ngIf="isLogged">
+      </div>
+      <div class="row">
+        @for (Skills of skill; track Skills) {
+          <div class="text-center col-sm-6 col-md-4 col-lg-3">
+            <!--Editar-->
+            @if (isLogged) {
+              <div>
                 <button class="btn btn-light" type="button" routerLink="/editskill/{{Skills.id}}">
-                <i class="bi bi-pencil-fill"></i>
+                  <i class="bi bi-pencil-fill"></i>
                 </button>
                 <!--Borrar-->
                 <button class="btn btn-danger" type="button" (click)="delete(Skills.id)">
-                <i class="bi bi-trash3-fill"></i>
+                  <i class="bi bi-trash3-fill"></i>
                 </button>
               </div>
+            }
           </div>
-        </div>
+        }
+      </div>
     </div>
   </div>
 </div>

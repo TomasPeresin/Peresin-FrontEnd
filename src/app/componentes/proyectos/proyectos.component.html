@@ -4,39 +4,47 @@
       <div class="row">
         <h2>-Proyectos</h2>
         <div class="col-lg-2">
-            <button type="button" class="btn btn-light" routerLink="/nuevoproyecto" *ngIf="isLogged">
+          @if (isLogged) {
+            <button type="button" class="btn btn-light" routerLink="/nuevoproyecto">
               Nuevo proyecto
             </button>
+          }
         </div>
       </div>
-      <table class="table"> 
+      <table class="table">
         <tbody>
-        <tr *ngFor="let Proyecto of proyectos">
-          <td>
-            <h3>{{Proyecto.nombre}}</h3>
-          </td>
-          <td>
-            <h4>{{Proyecto.fecha}}</h4>
-          </td>
-          <td><p>{{Proyecto.descripcion}}</p></td>
-          <td>
-            <p>Link: </p>
-            <a href="{{Proyecto.link}}">
-              <p>Añadir algo</p>
-            </a>
-          </td>
-          <td *ngIf="isLogged">
-            <button class="btn btn-light" type="button" routerLink="/editskill/{{Proyecto.id}}">
-              <i class="bi bi-pencil-fill"></i>
-            </button>
-          </td>
-            <!--Borrar-->
-          <td *ngIf="isLogged">
-            <button class="btn btn-danger" type="button" (click)="delete(Proyecto.id)">
-              <i class="bi bi-trash3-fill"></i>
-            </button>
-          </td>
-        </tr>
+          @for (Proyecto of proyectos; track Proyecto) {
+            <tr>
+              <td>
+                <h3>{{Proyecto.nombre}}</h3>
+              </td>
+              <td>
+                <h4>{{Proyecto.fecha}}</h4>
+              </td>
+              <td><p>{{Proyecto.descripcion}}</p></td>
+              <td>
+                <p>Link: </p>
+                <a href="{{Proyecto.link}}">
+                  <p>Añadir algo</p>
+                </a>
+              </td>
+              @if (isLogged) {
+                <td>
+                  <button class="btn btn-light" type="button" routerLink="/editskill/{{Proyecto.id}}">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                </td>
+              }
+              <!--Borrar-->
+              @if (isLogged) {
+                <td>
+                  <button class="btn btn-danger" type="button" (click)="delete(Proyecto.id)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
+                </td>
+              }
+            </tr>
+          }
         </tbody>
       </table>
     </div>
