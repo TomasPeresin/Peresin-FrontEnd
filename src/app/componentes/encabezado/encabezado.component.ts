@@ -3,32 +3,54 @@ import { Router } from '@angular/router';
 import { TokenService } from 'src/app/service/token.service';
 
 @Component({
-    selector: 'app-encabezado',
-    templateUrl: './encabezado.component.html',
-    styleUrls: ['./encabezado.component.css'],
-    standalone: false
+  selector: 'app-encabezado',
+  templateUrl: './encabezado.component.html',
+  styleUrls: ['./encabezado.component.css'],
+  standalone: false
 })
 export class EncabezadoComponent implements OnInit {
   isLogged = false;
+  showDropdown = false;
+  isDark = false;
 
-  constructor(private router:Router, private tokenService: TokenService){
-
-  }
+  constructor(private router: Router, private tokenService: TokenService) {}
 
   ngOnInit() {
-    if(this.tokenService.getToken()){
-      this.isLogged = true;
-    }else{
-      this.isLogged = false;
-    }
+    this.checkLoginStatus();
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    this.isDark = savedTheme === 'dark';
+    document.documentElement.setAttribute('data-bs-theme', savedTheme);
   }
 
-  onLogOut():void{
+  checkLoginStatus(): void {
+    this.isLogged = !!this.tokenService.getToken();
+  }
+
+  Login(): void {
+    this.router.navigate(['/login']);
+  }
+
+  onLogOut(): void {
     this.tokenService.logOut();
     window.location.reload();
   }
 
-  Login(){
-    this.router.navigate(['/login']);
+  toggleNavbar(): void {
+    const navbar = document.getElementById('navbarSupportedContent');
+    if (navbar) {
+      navbar.classList.toggle('show');
+    }
+  }
+
+  toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  toggleTheme() {
+    this.isDark = !this.isDark;
+    const newTheme = this.isDark ? 'dark' : 'light';
+
+    document.documentElement.setAttribute('data-bs-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
   }
 }

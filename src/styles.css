@@ -1,11 +1,133 @@
-/* You can add global styles to this file, and also import other style files */
+/* Variables de colores (paleta moderna) */
+/* :root {
+  --primary: #3b82f6;
+  --secondary: #10b981;
+  --dark: #2E2E2E; 
+  --light: #F4F4F4; 
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --bg-orange: #FB8500;
+  --dark-bg: #000000;
+  --hover-bg: #333333;
+} */
 
-div{
-    background-color: #339bd7;
+:root,
+[data-bs-theme="light"] {
+  --bs-body-bg: #FFFFFF;
+  --bs-body-color: #2E2E2E;
+
+  --surface: #F4F4F4;
+  --accent: #4A90E2;
+  --border: #E0E0E0;
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #121212;
+  --bs-body-color: #FFFFFF;
+
+  --surface: #2E2E2E;
+  --accent: #4A90E2;
+  --border: #3A3A3A;
+}
+
+/* Reset y estilos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+}
+
+/* Estilos para secciones */
+.section {
+  padding: 3rem 0;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+  color: var(--dark);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 4px;
+  background-color: var(--primary);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Botones modernizados */
+.btn {
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* Tarjetas modernizadas */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Tablas modernizadas */
+.table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  border: none;
+}
+
+.table thead {
+  background-color: var(--light);
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
   }
 
-table, td{
-  border: 1px solid black;
-  border-color: #219EBC;
-  border-top-color: #219EBC;
+  .card {
+    margin-bottom: 1.5rem;
+  }
 }

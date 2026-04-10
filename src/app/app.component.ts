@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import AOS from 'aos';
 
 @Component({
     selector: 'app-root',
@@ -8,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'PeresinAngular';
+
+  ngOnInit() {
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+  }
 }

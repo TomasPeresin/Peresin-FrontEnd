@@ -1,8 +1,81 @@
-div{
-    background-color: #FB8500;
-  }
+/* Navbar base */
+.navbar {
+  transition: all 0.3s ease;
+}
 
-.btn{
-    color: #ffffff;
-    background-color: #000000;
+.navbar-toggler {
+  border: none;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* Logo con animación */
+.logo-animation {
+  animation: logoSpin 2s infinite;
+}
+
+.btn-theme {
+  border: none;
+  background: transparent;
+  color: var(--bs-body-color);
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+}
+
+.btn-theme:hover {
+  transform: scale(1.2);
+  color: var(--accent);
+}
+
+@keyframes logoSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Iconos de redes sociales */
+.social-icon i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.social-icon:hover i {
+  transform: scale(1.2);
+}
+
+/* Botones de autenticación */
+.btn-login, .btn-logout {
+  color: var(--bs-body-color);
+  border: 2px solid var(--bs-body-color);
+  border-radius: 5px;
+  transition: all 0.5s ease;
+}
+
+.btn-login:hover, .btn-logout:hover {
+  background-color: var(--bs-body-color);
+  color: var(--bs-body-bg);
+  border: 2px solid var(--bs-body-color);
+  border-radius: 5px;
+  transition: all 0.5s ease;
+  transform: translateY(-2px);
+}
+
+/* Dropdown */
+.dropdown-menu {
+  background-color: var(--dark-bg);
+}
+
+.dropdown-item {
+  color: white;
+}
+
+.dropdown-item:hover {
+  background-color: var(--hover-bg);
+}
+
+/* Responsividad */
+@media (max-width: 992px) {
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='white' d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z'/%3e%3c/svg%3e");
+  }
 }
