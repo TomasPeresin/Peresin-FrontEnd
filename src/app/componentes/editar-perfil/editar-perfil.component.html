@@ -1,0 +1,270 @@
+<section class="form-page-wrapper">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8">
+        <div class="form-card shadow-lg">
+          
+          <!-- Header -->
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <div class="d-flex align-items-center gap-3">
+              <div class="auth-brand-badge" style="width: 44px; height: 44px; font-size: 1.15rem;">
+                <i class="bi bi-person-gear"></i>
+              </div>
+              <div>
+                <h3 class="m-0 font-weight-bold">Editar Perfil</h3>
+                <small class="text-muted">Actualiza tu información personal, foto de perfil y portada.</small>
+              </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-modern" routerLink="/">
+              <i class="bi bi-arrow-left me-1"></i> Volver
+            </button>
+          </div>
+
+          <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
+            <!-- Nombre y Apellido -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label font-weight-bold">Nombre *</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  class="form-control"
+                  [(ngModel)]="persona.nombre"
+                  placeholder="Ej: Tomás"
+                  required
+                />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="apellido" class="form-label font-weight-bold">Apellido *</label>
+                <input
+                  type="text"
+                  id="apellido"
+                  name="apellido"
+                  class="form-control"
+                  [(ngModel)]="persona.apellido"
+                  placeholder="Ej: Peresin"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Descripción / Bio -->
+            <div class="mb-4">
+              <label for="descripcion" class="form-label font-weight-bold">Descripción Profesional / Bio</label>
+              <textarea
+                id="descripcion"
+                name="descripcion"
+                class="form-control"
+                rows="4"
+                [(ngModel)]="persona.descripcion"
+                placeholder="Especializado en diseño y construcción de arquitecturas backend robustas..."
+              ></textarea>
+              <small class="text-muted">Esta descripción aparecerá en el encabezado principal de tu portafolio.</small>
+            </div>
+
+            <!-- 1. Foto de Perfil (Avatar) -->
+            <div class="p-3 rounded border mb-4" style="background-color: var(--bg-surface-secondary);">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                  <h5 class="h6 font-weight-bold m-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-person-bounding-box text-primary"></i> Foto de Perfil
+                  </h5>
+                  <small class="text-muted">Imagen cuadrada o redonda (JPG, PNG, WebP)</small>
+                </div>
+                <div class="btn-group btn-group-sm">
+                  <button
+                    type="button"
+                    class="btn"
+                    [ngClass]="avatarUploadMode === 'file' ? 'btn-primary-modern py-1 px-2' : 'btn-outline-modern py-1 px-2'"
+                    style="font-size: 0.78rem;"
+                    (click)="setAvatarMode('file')"
+                  >
+                    <i class="bi bi-upload me-1"></i> Subir Archivo
+                  </button>
+                  <button
+                    type="button"
+                    class="btn"
+                    [ngClass]="avatarUploadMode === 'url' ? 'btn-primary-modern py-1 px-2' : 'btn-outline-modern py-1 px-2'"
+                    style="font-size: 0.78rem;"
+                    (click)="setAvatarMode('url')"
+                  >
+                    <i class="bi bi-link-45deg me-1"></i> Ingresar URL
+                  </button>
+                </div>
+              </div>
+
+              <!-- Upload File Avatar -->
+              @if (avatarUploadMode === 'file') {
+                <div class="text-center p-3 rounded border bg-surface" style="border-style: dashed !important;">
+                  <input
+                    type="file"
+                    id="avatarFileInput"
+                    class="d-none"
+                    accept="image/*"
+                    (change)="onAvatarSelected($event)"
+                    #avatarInput
+                  />
+                  @if (!isUploadingAvatar) {
+                    <div>
+                      <p class="small text-muted mb-2">Haz clic para seleccionar tu foto de perfil</p>
+                      <button type="button" class="btn btn-sm btn-outline-modern" (click)="avatarInput.click()">
+                        <i class="bi bi-folder2-open me-1"></i> Examinar Foto
+                      </button>
+                    </div>
+                  } @else {
+                    <div class="py-2">
+                      <div class="spinner-border text-primary spinner-border-sm me-2" role="status"></div>
+                      <span class="small font-weight-bold">Subiendo foto de perfil...</span>
+                    </div>
+                  }
+                </div>
+              }
+
+              <!-- URL Input Avatar -->
+              @if (avatarUploadMode === 'url') {
+                <input
+                  type="text"
+                  id="img"
+                  name="img"
+                  class="form-control mb-2"
+                  [(ngModel)]="persona.img"
+                  placeholder="https://ejemplo.com/mi-foto.png"
+                />
+              }
+
+              <!-- Error Alert -->
+              @if (avatarUploadError) {
+                <div class="alert alert-danger py-2 small mt-2 mb-0">
+                  <i class="bi bi-exclamation-circle-fill me-1"></i> {{ avatarUploadError }}
+                </div>
+              }
+
+              <!-- Avatar Preview -->
+              @if (persona.img) {
+                <div class="d-flex align-items-center gap-3 mt-3 pt-2 border-top">
+                  <img [src]="persona.img" class="rounded-circle border shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="Avatar">
+                  <div class="flex-grow-1 text-truncate">
+                    <small class="text-muted d-block">Previsualización de foto</small>
+                    <span class="small text-truncate d-block">{{ persona.img }}</span>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeAvatar()" title="Quitar foto">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
+              }
+            </div>
+
+            <!-- 2. Imagen de Portada (Banner) -->
+            <div class="p-3 rounded border mb-4" style="background-color: var(--bg-surface-secondary);">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                  <h5 class="h6 font-weight-bold m-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-card-image text-info"></i> Imagen de Portada (Banner)
+                  </h5>
+                  <small class="text-muted">Imagen panorámica superior del portafolio</small>
+                </div>
+                <div class="btn-group btn-group-sm">
+                  <button
+                    type="button"
+                    class="btn"
+                    [ngClass]="bannerUploadMode === 'file' ? 'btn-primary-modern py-1 px-2' : 'btn-outline-modern py-1 px-2'"
+                    style="font-size: 0.78rem;"
+                    (click)="setBannerMode('file')"
+                  >
+                    <i class="bi bi-upload me-1"></i> Subir Archivo
+                  </button>
+                  <button
+                    type="button"
+                    class="btn"
+                    [ngClass]="bannerUploadMode === 'url' ? 'btn-primary-modern py-1 px-2' : 'btn-outline-modern py-1 px-2'"
+                    style="font-size: 0.78rem;"
+                    (click)="setBannerMode('url')"
+                  >
+                    <i class="bi bi-link-45deg me-1"></i> Ingresar URL
+                  </button>
+                </div>
+              </div>
+
+              <!-- Upload File Banner -->
+              @if (bannerUploadMode === 'file') {
+                <div class="text-center p-3 rounded border bg-surface" style="border-style: dashed !important;">
+                  <input
+                    type="file"
+                    id="bannerFileInput"
+                    class="d-none"
+                    accept="image/*"
+                    (change)="onBannerSelected($event)"
+                    #bannerInput
+                  />
+                  @if (!isUploadingBanner) {
+                    <div>
+                      <p class="small text-muted mb-2">Haz clic para seleccionar la imagen de portada</p>
+                      <button type="button" class="btn btn-sm btn-outline-modern" (click)="bannerInput.click()">
+                        <i class="bi bi-folder2-open me-1"></i> Examinar Banner
+                      </button>
+                    </div>
+                  } @else {
+                    <div class="py-2">
+                      <div class="spinner-border text-info spinner-border-sm me-2" role="status"></div>
+                      <span class="small font-weight-bold">Subiendo banner al servidor...</span>
+                    </div>
+                  }
+                </div>
+              }
+
+              <!-- URL Input Banner -->
+              @if (bannerUploadMode === 'url') {
+                <input
+                  type="text"
+                  id="banner"
+                  name="banner"
+                  class="form-control mb-2"
+                  [(ngModel)]="persona.banner"
+                  placeholder="https://ejemplo.com/portada.png"
+                />
+              }
+
+              <!-- Error Alert -->
+              @if (bannerUploadError) {
+                <div class="alert alert-danger py-2 small mt-2 mb-0">
+                  <i class="bi bi-exclamation-circle-fill me-1"></i> {{ bannerUploadError }}
+                </div>
+              }
+
+              <!-- Banner Preview -->
+              @if (persona.banner) {
+                <div class="mt-3 pt-2 border-top">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <small class="text-muted">Previsualización de portada:</small>
+                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeBanner()" title="Quitar portada">
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </div>
+                  <img [src]="persona.banner" class="rounded w-100 border shadow-sm" style="max-height: 140px; object-fit: cover;" alt="Banner Preview">
+                </div>
+              }
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid gap-2">
+              <button
+                class="btn btn-primary-modern justify-content-center py-2"
+                type="submit"
+                [disabled]="!f.valid || isSaving || isUploadingAvatar || isUploadingBanner"
+              >
+                @if (isSaving) {
+                  <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                  Guardando...
+                } @else {
+                  <i class="bi bi-check2-circle me-1"></i> Guardar Cambios del Perfil
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

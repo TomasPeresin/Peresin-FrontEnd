@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
     standalone: false
 })
 export class PieComponent {
-
+  anioActual: number = new Date().getFullYear();
 }

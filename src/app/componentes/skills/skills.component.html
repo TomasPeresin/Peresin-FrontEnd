@@ -1,34 +1,145 @@
-<div class="row">
-  <div class="col-12">
-    <div class="container-fluid">
-      <div class="row">
-        <h2>-Soft/Hard Skills</h2>
-        <div class="col-lg-2">
+<section id="skills" class="section-wrapper bg-surface-alt">
+  <div class="container">
+    <!-- Header -->
+    <div class="section-header">
+      <span class="section-badge">Competencias</span>
+      <h2 class="section-title">Habilidades y <span class="text-gradient">Stack Tecnológico</span></h2>
+      <p class="section-subtitle">
+        Áreas de especialización y herramientas aplicadas en desarrollo backend, análisis funcional, bases de datos y calidad de software.
+      </p>
+
+      <!-- Admin Add Button -->
+      @if (isLogged) {
+        <div class="mt-3">
+          <button type="button" class="btn btn-primary-modern" routerLink="/nuevaskill">
+            <i class="bi bi-plus-circle me-1"></i> Agregar Nueva Tecnología
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- 1. Cuadrícula de Especialización por Áreas (Opción 4) -->
+    <div class="row g-4 mb-5">
+      <!-- 1. Backend y APIs -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card-modern skill-category-card p-4 h-100">
+          <div class="skill-category-icon bg-primary-subtle text-primary">
+            <i class="bi bi-hdd-network"></i>
+          </div>
+          <h3 class="skill-category-title mb-3">Backend & APIs</h3>
+          <div class="skill-chips-group">
+            <span class="tech-pill"><i class="bi bi-check2 text-primary"></i> Java (8, 11, 17+)</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-primary"></i> Spring Boot</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-primary"></i> Spring Security</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-primary"></i> Spring Data JPA</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-primary"></i> Hibernate</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-primary"></i> RESTful APIs & JWT</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-primary"></i> Maven</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Bases de Datos y SQL -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card-modern skill-category-card p-4 h-100">
+          <div class="skill-category-icon bg-warning-subtle text-warning">
+            <i class="bi bi-database"></i>
+          </div>
+          <h3 class="skill-category-title mb-3">Bases de Datos & SQL</h3>
+          <div class="skill-chips-group">
+            <span class="tech-pill"><i class="bi bi-check2 text-warning"></i> MySQL</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-warning"></i> PostgreSQL</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-warning"></i> Modelado DER</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-warning"></i> Normalización</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-warning"></i> Consultas SQL</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-warning"></i> Integridad Referencial</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Analista Funcional & Metodologías -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card-modern skill-category-card p-4 h-100">
+          <div class="skill-category-icon bg-info-subtle text-info">
+            <i class="bi bi-diagram-3"></i>
+          </div>
+          <h3 class="skill-category-title mb-3">Análisis Funcional</h3>
+          <div class="skill-chips-group">
+            <span class="tech-pill"><i class="bi bi-check2 text-info"></i> Relevamiento</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-info"></i> Historias de Usuario</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-info"></i> Diagramas UML</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-info"></i> Casos de Uso</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-info"></i> Metodología Scrum</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-info"></i> Documentación Técnica</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. QA, Testing & Herramientas -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card-modern skill-category-card p-4 h-100">
+          <div class="skill-category-icon bg-success-subtle text-success">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h3 class="skill-category-title mb-3">QA & Herramientas</h3>
+          <div class="skill-chips-group">
+            <span class="tech-pill"><i class="bi bi-check2 text-success"></i> Postman & API Testing</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-success"></i> Casos de Prueba</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-success"></i> Criterios de Aceptación</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-success"></i> Docker</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-success"></i> Git & GitHub</span>
+            <span class="tech-pill"><i class="bi bi-check2 text-success"></i> Angular / TypeScript</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Tecnologías Administrables / Dinámicas (Opción 2: Chips con Íconos y Acciones) -->
+    @if (skill.length > 0) {
+      <div class="card-modern p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+          <h4 class="h5 font-weight-bold m-0 d-flex align-items-center gap-2">
+            <i class="bi bi-tools text-primary"></i> Herramientas y Tecnologías Adicionales
+          </h4>
           @if (isLogged) {
-            <button type="button" class="btn btn-light" routerLink="/nuevaskill">
-              Nueva skill
+            <button class="btn btn-sm btn-outline-modern" routerLink="/nuevaskill">
+              <i class="bi bi-plus-lg me-1"></i> Añadir otra
             </button>
           }
         </div>
-      </div>
-      <div class="row">
-        @for (Skills of skill; track Skills) {
-          <div class="text-center col-sm-6 col-md-4 col-lg-3">
-            <!--Editar-->
-            @if (isLogged) {
-              <div>
-                <button class="btn btn-light" type="button" routerLink="/editskill/{{Skills.id}}">
-                  <i class="bi bi-pencil-fill"></i>
-                </button>
-                <!--Borrar-->
-                <button class="btn btn-danger" type="button" (click)="delete(Skills.id)">
-                  <i class="bi bi-trash3-fill"></i>
-                </button>
+
+        <div class="d-flex flex-wrap gap-3">
+          @for (Skills of skill; track Skills.id) {
+            <div class="dynamic-tech-chip">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-layers-fill text-primary"></i>
+                <span class="fw-semibold text-main">{{ Skills.nombre }}</span>
               </div>
-            }
-          </div>
-        }
+              @if (isLogged) {
+                <div class="chip-admin-actions d-flex gap-1 ms-2">
+                  <button class="btn-action-admin edit" title="Editar tecnología" [routerLink]="['/editskill', Skills.id]">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                  <button class="btn-action-admin delete" title="Eliminar tecnología" (click)="delete(Skills.id)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    } @else if (isLogged) {
+      <div class="card-modern p-4 text-center">
+        <i class="bi bi-tools display-6 text-muted mb-2 d-block"></i>
+        <h5 class="font-weight-bold">Personaliza tus tecnologías adicionales</h5>
+        <p class="text-muted small mb-3">Puedes registrar cualquier tecnología o herramienta adicional para que aparezca en tus chips destacados.</p>
+        <div>
+          <button type="button" class="btn btn-primary-modern btn-sm" routerLink="/nuevaskill">
+            <i class="bi bi-plus-circle me-1"></i> Cargar Primera Tecnología
+          </button>
+        </div>
+      </div>
+    }
   </div>
-</div>
+</section>

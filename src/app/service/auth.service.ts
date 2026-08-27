@@ -14,11 +14,23 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public nuevo(nuevoUsuario: NuevoUsuario): Observable<any>{
-    return this.httpClient.post<any>(this.authURL + 'nuevo', nuevoUsuario)
+  public nuevo(nuevoUsuario: NuevoUsuario): Observable<any> {
+    return this.httpClient.post<any>(this.authURL + 'nuevo', nuevoUsuario);
   }
 
-  public login(loginUsuario: LoginUsuario): Observable<any>{
-    return this.httpClient.post<JwtDto>(this.authURL + 'login', loginUsuario)
+  public login(loginUsuario: LoginUsuario): Observable<JwtDto> {
+    return this.httpClient.post<JwtDto>(this.authURL + 'login', loginUsuario);
+  }
+
+  public solicitarRecuperacion(email: string): Observable<any> {
+    return this.httpClient.post<any>(this.authURL + 'recuperar-password', { email });
+  }
+
+  public verificarToken(token: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.authURL}verificar-token/${token}`);
+  }
+
+  public cambiarPassword(token: string, newPassword: string): Observable<any> {
+    return this.httpClient.post<any>(this.authURL + 'cambiar-password', { token, newPassword });
   }
 }

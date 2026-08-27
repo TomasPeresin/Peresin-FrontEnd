@@ -1,26 +1,54 @@
-<section class="vh-100" style="background-color: #508bfc;">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-              <h3 class="mb-5">Insertar nueva skill</h3>
-              <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-
-                <div class="form-outline mb-4">
-                    <input type="text" id="nombre" name="nombre" class="form-control form-control-lg" [(ngModel)]="nombre" required/>
-                    <label for="nombre">Nombre de la skill</label>
-                </div>
-    
-                <div class="form-outline mb-4">
-                    <input type="number" id="porcentaje" name="porcentaje" class="form-control form-control-lg" min="10" max="100"  [(ngModel)]="porcentaje" required />
-                    <label class="form-label" for="porcentaje">Porcentaje de la tarea</label>
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Insertar skill</button>
-              </form>
-            </div>
+<section class="form-page-wrapper">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="form-card shadow-lg">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h3 class="m-0 font-weight-bold">Nueva Tecnología</h3>
+            <button type="button" class="btn btn-sm btn-outline-modern" routerLink="/">
+              <i class="bi bi-arrow-left me-1"></i> Volver
+            </button>
           </div>
+
+          <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+            <div class="mb-4">
+              <label for="nombre" class="form-label font-weight-bold">Nombre de la Tecnología o Herramienta *</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                class="form-control"
+                [(ngModel)]="nombre"
+                placeholder="Ej: Docker, Postman, JWT, Microservicios..."
+                required
+              />
+            </div>
+
+            <!-- Sugerencias Rápidas -->
+            <div class="mb-4">
+              <small class="text-muted d-block mb-2 font-weight-bold">Sugerencias rápidas:</small>
+              <div class="d-flex flex-wrap gap-2">
+                @for (sug of sugerencias; track sug) {
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-modern py-1 px-2"
+                    style="font-size: 0.8rem;"
+                    (click)="seleccionarSugerencia(sug)"
+                  >
+                    + {{ sug }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary-modern justify-content-center py-2" type="submit" [disabled]="!nombre.trim()">
+                <i class="bi bi-check2-circle me-1"></i> Guardar Tecnología
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>

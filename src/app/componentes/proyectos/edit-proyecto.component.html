@@ -1,31 +1,156 @@
-<section class="vh-100" style="background-color: #508bfc;">
+<section class="form-page-wrapper">
   @if (proyectoLab) {
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-              <h3 class="mb-5">Insertar nuevo proyecto</h3>
-              <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
-                <div class="form-outline mb-4">
-                  <input type="text" id="nombre" name="nombre" class="form-control form-control-lg" [(ngModel)]="proyectoLab.nombre" required/>
-                  <label for="nombre">Nombre del proyecto</label>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="text" id="descripcion" name="descripcion" class="form-control form-control-lg" [(ngModel)]="proyectoLab.descripcion" required/>
-                  <label for="descripcion">Descripcion del proyecto</label>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="number" id="fecha" name="fecha" class="form-control form-control-lg" min="2018" max="2024" [(ngModel)]="proyectoLab.fecha" required />
-                  <label class="form-label" for="fecha">Fecha del proyecto</label>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="text" id="link" name="link" class="form-control form-control-lg" [(ngModel)]="proyectoLab.link" required/>
-                  <label for="link">Link del proyecto</label>
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Actualizar proyecto</button>
-              </form>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-7">
+          <div class="form-card shadow-lg">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+              <h3 class="m-0 font-weight-bold">Modificar Proyecto</h3>
+              <button type="button" class="btn btn-sm btn-outline-modern" routerLink="/">
+                <i class="bi bi-arrow-left me-1"></i> Volver
+              </button>
             </div>
+
+            <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
+              <div class="mb-3">
+                <label for="nombre" class="form-label font-weight-bold">Nombre del proyecto *</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" [(ngModel)]="proyectoLab.nombre" required />
+              </div>
+
+              <!-- Categorías de Especialización (Multi-selección) -->
+              <div class="mb-3">
+                <label class="form-label font-weight-bold d-block">Categorías / Roles asociados *</label>
+                <small class="text-muted d-block mb-2">Selecciona una o más categorías para los filtros del portafolio:</small>
+                <div class="d-flex flex-wrap gap-2">
+                  @for (cat of availableCategories; track cat.id) {
+                    <button
+                      type="button"
+                      class="btn btn-sm"
+                      [ngClass]="isCategorySelected(cat.id) ? 'btn-primary-modern py-1 px-3' : 'btn-outline-modern py-1 px-3'"
+                      (click)="toggleCategory(cat.id)"
+                    >
+                      <i class="bi me-1" [ngClass]="cat.icon"></i>
+                      {{ cat.label }}
+                      @if (isCategorySelected(cat.id)) {
+                        <i class="bi bi-check2 ms-1"></i>
+                      }
+                    </button>
+                  }
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="descripcion" class="form-label font-weight-bold">Descripción / Caso de estudio *</label>
+                <textarea id="descripcion" name="descripcion" class="form-control" rows="4" [(ngModel)]="proyectoLab.descripcion" required></textarea>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="fecha" class="form-label font-weight-bold">Año *</label>
+                  <input type="number" id="fecha" name="fecha" class="form-control" min="2015" max="2035" [(ngModel)]="proyectoLab.fecha" required />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="link" class="form-label font-weight-bold">Enlace (GitHub / Docs / Demo) *</label>
+                  <input type="text" id="link" name="link" class="form-control" [(ngModel)]="proyectoLab.link" required />
+                </div>
+              </div>
+
+              <!-- Sección de Imagen con Subida de Archivos -->
+              <div class="mb-4">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <label class="form-label font-weight-bold mb-0">Imagen del Proyecto (Opcional)</label>
+                  <div class="btn-group btn-group-sm">
+                    <button
+                      type="button"
+                      class="btn"
+                      [ngClass]="uploadMode === 'file' ? 'btn-primary-modern py-1 px-2' : 'btn-outline-modern py-1 px-2'"
+                      style="font-size: 0.78rem;"
+                      (click)="setUploadMode('file')"
+                    >
+                      <i class="bi bi-upload me-1"></i> Subir Archivo
+                    </button>
+                    <button
+                      type="button"
+                      class="btn"
+                      [ngClass]="uploadMode === 'url' ? 'btn-primary-modern py-1 px-2' : 'btn-outline-modern py-1 px-2'"
+                      style="font-size: 0.78rem;"
+                      (click)="setUploadMode('url')"
+                    >
+                      <i class="bi bi-link-45deg me-1"></i> Ingresar URL
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Modo 1: Subir archivo desde el equipo -->
+                @if (uploadMode === 'file') {
+                  <div class="upload-dropzone p-3 text-center rounded border mb-2" style="background-color: var(--bg-surface-secondary); border-style: dashed !important;">
+                    <input
+                      type="file"
+                      id="fileUploadEditInput"
+                      class="d-none"
+                      accept="image/png, image/jpeg, image/webp, image/gif, image/svg+xml"
+                      (change)="onFileSelected($event)"
+                      #fileInputEdit
+                    />
+                    
+                    @if (!isUploadingImage) {
+                      <div>
+                        <i class="bi bi-cloud-arrow-up display-6 text-primary d-block mb-2"></i>
+                        <p class="small text-muted mb-2">Haz clic para reemplazar la imagen desde tu computadora (PNG, JPG, WebP - Máx 5MB)</p>
+                        <button type="button" class="btn btn-sm btn-outline-modern" (click)="fileInputEdit.click()">
+                          <i class="bi bi-folder2-open me-1"></i> Examinar Imagen
+                        </button>
+                      </div>
+                    } @else {
+                      <div class="py-3">
+                        <div class="spinner-border text-primary spinner-border-sm me-2" role="status"></div>
+                        <span class="small font-weight-bold">Subiendo imagen al servidor...</span>
+                      </div>
+                    }
+                  </div>
+                }
+
+                <!-- Modo 2: Ingresar URL de imagen -->
+                @if (uploadMode === 'url') {
+                  <input
+                    type="text"
+                    id="img"
+                    name="img"
+                    class="form-control mb-2"
+                    [(ngModel)]="proyectoLab.img"
+                    placeholder="https://ejemplo.com/captura.png"
+                  />
+                }
+
+                <!-- Alerta de Error al subir -->
+                @if (uploadError) {
+                  <div class="alert alert-danger py-2 small mb-2 d-flex align-items-center gap-2">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <div>{{ uploadError }}</div>
+                  </div>
+                }
+
+                <!-- Previsualización de la Imagen -->
+                @if (proyectoLab.img) {
+                  <div class="image-preview-box p-2 rounded border mt-2 d-flex align-items-center justify-content-between" style="background-color: var(--bg-surface-secondary);">
+                    <div class="d-flex align-items-center gap-2 text-truncate me-2">
+                      <img [src]="proyectoLab.img" class="img-thumbnail rounded" style="width: 50px; height: 50px; object-fit: cover;" alt="Previsualización">
+                      <span class="small text-muted text-truncate" style="max-width: 280px;">{{ proyectoLab.img }}</span>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeImage()" title="Quitar imagen">
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </div>
+                }
+              </div>
+
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary-modern justify-content-center py-2" type="submit" [disabled]="!f.valid || isUploadingImage">
+                  <i class="bi bi-check2-circle me-1"></i> Actualizar Proyecto
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

@@ -1,15 +1,28 @@
 export class NuevoUsuario {
-    nombre!: String;
-    nombreUsuario!: String;
-    email!: String;
-    password!: String;
-    authorities!: String[];
+    nombre!: string;
+    nombreUsuario!: string;
+    email!: string;
+    password!: string;
+    roles: string[] = ['user'];
+    authorities?: string[];
+    codigoAdmin?: string;
 
-    constructor(nombre: String, nombreUsuario:String, email:String, password:String, authorities:String[]){
+    constructor(
+        nombre: string,
+        nombreUsuario: string,
+        email: string,
+        password: string,
+        roles: string[] = ['user'],
+        codigoAdmin?: string
+    ) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
-        this.authorities = authorities;
+        this.roles = roles;
+        this.authorities = roles;
+        if (codigoAdmin) {
+            this.codigoAdmin = codigoAdmin;
+        }
     }
 }

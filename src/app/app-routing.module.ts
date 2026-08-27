@@ -11,6 +11,9 @@ import { NewProyectosComponent } from './componentes/proyectos/new-proyectos.com
 import { SignInComponent } from './componentes/sign-in/sign-in.component';
 import { EditSkillComponent } from './componentes/skills/edit-skill.component';
 import { NewSkillsComponent } from './componentes/skills/new-skills.component';
+import { RecuperarPasswordComponent } from './componentes/recuperar-password/recuperar-password.component';
+import { CambiarPasswordComponent } from './componentes/cambiar-password/cambiar-password.component';
+import { EditarPerfilComponent } from './componentes/editar-perfil/editar-perfil.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,7 +26,10 @@ const routes: Routes = [
   {path: 'nuevaskill', component: NewSkillsComponent},
   {path: 'editproyecto/:id', component: EditProyectoComponent},
   {path: 'nuevoproyecto', component: NewProyectosComponent},
-  {path: 'nuevousuario', component: SignInComponent}
+  {path: 'nuevousuario', component: SignInComponent},
+  {path: 'recuperar-password', component: RecuperarPasswordComponent},
+  {path: 'cambiar-password', component: CambiarPasswordComponent},
+  {path: 'editar-perfil', component: EditarPerfilComponent}
 ];
 
 @NgModule({

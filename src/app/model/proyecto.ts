@@ -1,14 +1,18 @@
 export class Proyecto {
     id?: number;
-    nombre: String;
-    descripcion: String;
+    nombre: string;
+    descripcion: string;
     fecha: number;
-    link: String;
+    link: string;
+    img?: string;
+    categorias?: string;
 
-    constructor(nombre: String, descripcion: String, fecha:number, link:String){
+    constructor(nombre: string, descripcion: string, fecha: number, link: string, img?: string, categorias?: string) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha = fecha;
         this.link = link;
+        this.img = img;
+        this.categorias = categorias;
     }
 }
