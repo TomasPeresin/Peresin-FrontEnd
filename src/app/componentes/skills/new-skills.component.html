@@ -1,43 +1,49 @@
-<section class="form-page-wrapper py-5">
+<section class="form-page-wrapper">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card-modern p-4 p-md-5">
+        <div class="form-card shadow-lg">
           <div class="d-flex align-items-center justify-content-between mb-4">
-            <h3 class="m-0 font-weight-bold">Nueva Habilidad</h3>
+            <h3 class="m-0 font-weight-bold">Nueva Tecnología</h3>
             <button type="button" class="btn btn-sm btn-outline-modern" routerLink="/">
-              <i class="bi bi-arrow-left"></i> Volver
+              <i class="bi bi-arrow-left me-1"></i> Volver
             </button>
           </div>
 
           <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-            <div class="mb-3">
-              <label for="nombre" class="form-label font-weight-bold">Nombre de la tecnología o habilidad *</label>
-              <input type="text" id="nombre" name="nombre" class="form-control" [(ngModel)]="nombre" placeholder="Ej: Java, Spring Boot, SQL, Postman..." required />
-            </div>
-
             <div class="mb-4">
-              <label for="porcentaje" class="form-label font-weight-bold d-flex justify-content-between">
-                <span>Nivel / Porcentaje de dominio *</span>
-                <span class="text-primary font-weight-bold">{{ porcentaje || 0 }}%</span>
-              </label>
-              <input type="range" id="porcentajeRange" class="form-range mb-2" min="10" max="100" step="5" [(ngModel)]="porcentaje" name="porcentajeRange" />
-              <input type="number" id="porcentaje" name="porcentaje" class="form-control" min="10" max="100" [(ngModel)]="porcentaje" placeholder="10 - 100" required />
+              <label for="nombre" class="form-label font-weight-bold">Nombre de la Tecnología o Herramienta *</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                class="form-control"
+                [(ngModel)]="nombre"
+                placeholder="Ej: Docker, Postman, JWT, Microservicios..."
+                required
+              />
             </div>
 
-            <!-- Progress Bar Preview -->
-            @if (porcentaje) {
-              <div class="mb-4">
-                <small class="text-muted d-block mb-1">Previsualización:</small>
-                <div class="progress" style="height: 10px; border-radius: 6px;">
-                  <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="porcentaje" [attr.aria-valuenow]="porcentaje" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+            <!-- Sugerencias Rápidas -->
+            <div class="mb-4">
+              <small class="text-muted d-block mb-2 font-weight-bold">Sugerencias rápidas:</small>
+              <div class="d-flex flex-wrap gap-2">
+                @for (sug of sugerencias; track sug) {
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-modern py-1 px-2"
+                    style="font-size: 0.8rem;"
+                    (click)="seleccionarSugerencia(sug)"
+                  >
+                    + {{ sug }}
+                  </button>
+                }
               </div>
-            }
+            </div>
 
             <div class="d-grid gap-2">
-              <button class="btn btn-primary-modern" type="submit" [disabled]="!f.valid">
-                <i class="bi bi-check2-circle"></i> Guardar Habilidad
+              <button class="btn btn-primary-modern justify-content-center py-2" type="submit" [disabled]="!nombre.trim()">
+                <i class="bi bi-check2-circle me-1"></i> Guardar Tecnología
               </button>
             </div>
           </form>

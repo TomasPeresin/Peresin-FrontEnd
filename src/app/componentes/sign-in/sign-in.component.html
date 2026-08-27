@@ -1,32 +1,222 @@
-<section class="vh-100" style="background-color: #508bfc;">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-              <h3 class="mb-5">Insertar nuevo usuario</h3>
-              <form (ngSubmit)="onSignIn()" novalidate #f="ngForm">
-                <div class="form-outline mb-4">
-                    <input type="text" id="nombre" name="nombre" class="form-control form-control-lg" [(ngModel)]="nombre" required/>
-                    <label for="nombre">Nombre</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="text" id="nombreUsuario" name="nombreUsuario" class="form-control form-control-lg" [(ngModel)]="nombreUsuario" required />
-                    <label class="form-label" for="nombreUsuario">Nombre de usuario</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="text" id="email" name="email" class="form-control form-control-lg" [(ngModel)]="email" required/>
-                    <label for="email">Email</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="password" id="password" name="password" class="form-control form-control-lg" [(ngModel)]="password" required />
-                    <label class="form-label" for="password">Contraseña</label>
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Insertar usuario</button>
-              </form>
+<div class="auth-page-wrapper">
+  <div class="container py-5">
+    <div class="row justify-content-center align-items-center min-vh-100 py-4">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        
+        <!-- Tarjeta de Registro -->
+        <div class="auth-card shadow-lg">
+          
+          <!-- Encabezado de la Tarjeta -->
+          <div class="auth-header text-center mb-4">
+            <div class="auth-brand-badge mb-3">
+              <span>TP</span>
+            </div>
+            <h3 class="auth-title">Crear Cuenta</h3>
+            <p class="auth-subtitle">Regístrate para acceder a las funciones del portfolio</p>
+          </div>
+
+          <!-- Mensaje de Éxito -->
+          <div *ngIf="isSuccess" class="alert alert-success d-flex align-items-center gap-2 mb-4" role="alert">
+            <i class="bi bi-check-circle-fill flex-shrink-0 fs-5"></i>
+            <div>
+              <div class="fw-semibold">¡Registro exitoso!</div>
+              <div class="small">{{ successMsj }}</div>
             </div>
           </div>
+
+          <!-- Mensaje de Error -->
+          <div *ngIf="isError" class="alert alert-danger d-flex align-items-center gap-2 mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
+            <div class="small">{{ errMsj }}</div>
+          </div>
+
+          <!-- Formulario de Registro -->
+          <form *ngIf="!isSuccess" #f="ngForm" (ngSubmit)="onSignIn()" novalidate class="auth-form">
+            
+            <!-- Campo Nombre Completo -->
+            <div class="form-group mb-3">
+              <label class="form-label-custom" for="nombre">
+                <i class="bi bi-person-badge me-1"></i> Nombre Completo
+              </label>
+              <div class="input-icon-group">
+                <i class="bi bi-card-text input-icon-left"></i>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  class="form-control form-control-custom"
+                  [(ngModel)]="nombre"
+                  placeholder="Ingresa tu nombre completo aquí"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Campo Nombre de Usuario -->
+            <div class="form-group mb-3">
+              <label class="form-label-custom" for="nombreUsuario">
+                <i class="bi bi-person me-1"></i> Nombre de Usuario
+              </label>
+              <div class="input-icon-group">
+                <i class="bi bi-person-circle input-icon-left"></i>
+                <input
+                  type="text"
+                  id="nombreUsuario"
+                  name="nombreUsuario"
+                  class="form-control form-control-custom"
+                  [(ngModel)]="nombreUsuario"
+                  placeholder="Ingresa tu nombre de usuario"
+                  required
+                  autocomplete="username"
+                />
+              </div>
+            </div>
+
+            <!-- Campo Correo Electrónico -->
+            <div class="form-group mb-3">
+              <label class="form-label-custom" for="email">
+                <i class="bi bi-envelope me-1"></i> Correo Electrónico
+              </label>
+              <div class="input-icon-group">
+                <i class="bi bi-at input-icon-left"></i>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control form-control-custom"
+                  [(ngModel)]="email"
+                  placeholder="ejemplo@correo.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <!-- Campo Contraseña -->
+            <div class="form-group mb-3">
+              <label class="form-label-custom" for="password">
+                <i class="bi bi-lock me-1"></i> Contraseña
+              </label>
+              <div class="input-icon-group">
+                <i class="bi bi-key input-icon-left"></i>
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  id="password"
+                  name="password"
+                  class="form-control form-control-custom"
+                  [(ngModel)]="password"
+                  placeholder="Mínimo 6 caracteres"
+                  required
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="btn-toggle-password"
+                  (click)="toggleShowPassword()"
+                  [title]="showPassword ? 'Ocultar contraseña' : 'Ver contraseña'"
+                  tabindex="-1"
+                >
+                  <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Campo Confirmar Contraseña -->
+            <div class="form-group mb-3">
+              <label class="form-label-custom" for="confirmPassword">
+                <i class="bi bi-lock-fill me-1"></i> Confirmar Contraseña
+              </label>
+              <div class="input-icon-group">
+                <i class="bi bi-shield-lock input-icon-left"></i>
+                <input
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  class="form-control form-control-custom"
+                  [(ngModel)]="confirmPassword"
+                  placeholder="Repite tu contraseña"
+                  required
+                  autocomplete="new-password"
+                />
+                <button
+                  type="button"
+                  class="btn-toggle-password"
+                  (click)="toggleShowConfirmPassword()"
+                  [title]="showConfirmPassword ? 'Ocultar contraseña' : 'Ver contraseña'"
+                  tabindex="-1"
+                >
+                  <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+                </button>
+              </div>
+              <div *ngIf="confirmPassword && password !== confirmPassword" class="text-danger small mt-1">
+                <i class="bi bi-x-circle me-1"></i> Las contraseñas no coinciden
+              </div>
+            </div>
+
+            <!-- Sección Clave Secreta Admin (Opcional) -->
+            <div class="admin-secret-section my-3">
+              <button
+                type="button"
+                class="btn-toggle-admin-code"
+                (click)="toggleAdminCode()"
+              >
+                <i class="bi" [ngClass]="showAdminCode ? 'bi-dash-circle-fill text-primary' : 'bi-plus-circle'"></i>
+                <span>¿Tienes un código de Administrador? (Opcional)</span>
+              </button>
+
+              <div *ngIf="showAdminCode" class="mt-2 p-3 admin-code-card">
+                <label class="form-label-custom" for="codigoAdmin">
+                  <i class="bi bi-shield-shaded me-1"></i> Clave Secreta de Admin
+                </label>
+                <input
+                  type="password"
+                  id="codigoAdmin"
+                  name="codigoAdmin"
+                  class="form-control form-control-custom"
+                  [(ngModel)]="codigoAdmin"
+                  placeholder="Ingresa la clave secreta del proyecto"
+                />
+                <div class="small text-muted mt-1">
+                  Si la clave es correcta, se otorgarán privilegios de administrador.
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón Submit -->
+            <button
+              class="btn btn-primary-modern w-100 justify-content-center py-2 mt-4"
+              type="submit"
+              [disabled]="isLoading"
+            >
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+              <i *ngIf="!isLoading" class="bi bi-person-check me-1"></i>
+              {{ isLoading ? 'Creando cuenta...' : 'Crear Cuenta' }}
+            </button>
+
+            <!-- Separador -->
+            <div class="auth-divider my-4">
+              <span>¿Ya tienes una cuenta?</span>
+            </div>
+
+            <!-- Enlace a Login -->
+            <div class="text-center">
+              <a routerLink="/login" class="btn btn-outline-modern w-100 justify-content-center py-2">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+              </a>
+            </div>
+
+          </form>
+
+          <!-- Footer de la Tarjeta -->
+          <div class="auth-footer text-center mt-4 pt-3 border-top">
+            <a routerLink="/" class="back-home-link">
+              <i class="bi bi-arrow-left me-1"></i> Volver al Portfolio
+            </a>
+          </div>
+
         </div>
+
       </div>
     </div>
-</section>
+  </div>
+</div>

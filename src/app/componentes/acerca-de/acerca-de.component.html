@@ -2,7 +2,7 @@
   <!-- Banner Background -->
   <div class="hero-banner-container">
     @if (persona.banner) {
-      <img [src]="persona.banner" class="hero-banner-img" alt="Portada de Tomás Peresín">
+      <img [src]="persona.banner" class="hero-banner-img" alt="Portada de Tomás Peresin">
     } @else {
       <div class="hero-banner-placeholder"></div>
     }
@@ -14,7 +14,7 @@
       <!-- Profile Photo y Status -->
       <div class="col-lg-4 text-center text-lg-start mb-4 mb-lg-0">
         <div class="avatar-wrapper">
-          <img [src]="persona.img || 'assets/foto-perfil.jpg'" alt="Tomás Ignacio Peresín" class="avatar-img">
+          <img [src]="persona.img || 'assets/foto-perfil.jpg'" alt="Tomás Ignacio Peresin" class="avatar-img">
           <div class="status-indicator" title="Disponible para nuevos proyectos">
             <span class="status-dot"></span>
           </div>
@@ -51,13 +51,18 @@
 
         <!-- Action Buttons -->
         <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3">
-          <a href="#proyectos" class="btn-primary-modern">
+          @if (isLogged) {
+            <a routerLink="/editar-perfil" class="btn-primary-modern">
+              <i class="bi bi-person-gear"></i> Editar Perfil
+            </a>
+          }
+          <a href="#proyectos" class="btn-primary-modern" *ngIf="!isLogged">
             <i class="bi bi-code-slash"></i> Ver Proyectos
           </a>
           <a href="https://github.com/TomasPeresin" target="_blank" rel="noopener noreferrer" class="btn-outline-modern">
             <i class="bi bi-github"></i> GitHub
           </a>
-          <a href="https://linkedin.com/in/tomas-peresin" target="_blank" rel="noopener noreferrer" class="btn-outline-modern">
+          <a href="https://www.linkedin.com/in/tomas-peresin-364588213/" target="_blank" rel="noopener noreferrer" class="btn-outline-modern">
             <i class="bi bi-linkedin"></i> LinkedIn
           </a>
         </div>

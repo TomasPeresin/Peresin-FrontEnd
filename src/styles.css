@@ -321,3 +321,75 @@ a:hover {
     font-size: 1.85rem;
   }
 }
+
+/* ==========================================================================
+   Vistas de Formularios CRUD (Crear/Editar Educación, Exp, Skills, Proyectos)
+   ========================================================================== */
+.form-page-wrapper {
+  min-height: 100vh;
+  background-color: var(--bg-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 3.5rem 0;
+}
+
+.form-page-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 650px;
+  height: 450px;
+  background: var(--accent-gradient);
+  opacity: 0.08;
+  filter: blur(80px);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.form-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  padding: 2.25rem 2rem;
+  position: relative;
+  z-index: 1;
+  transform: none !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-card:hover {
+  transform: none !important;
+}
+
+.form-card .form-control,
+.form-card .form-select {
+  background-color: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-card .form-control:focus,
+.form-card .form-select:focus {
+  background-color: var(--bg-surface);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  color: var(--text-main);
+}
+
+.form-card .form-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+

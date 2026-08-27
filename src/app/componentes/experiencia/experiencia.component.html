@@ -55,6 +55,20 @@
                 <p class="timeline-description text-secondary mb-0">
                   {{ Experiencia.descripcionE }}
                 </p>
+
+                <!-- Tecnologías y Herramientas utilizadas -->
+                @if (getTechList(Experiencia).length > 0) {
+                  <div class="timeline-tech-stack mt-3 pt-3 border-top">
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                      <small class="text-muted fw-semibold me-1"><i class="bi bi-tools me-1"></i> Tecnologías & Herramientas:</small>
+                      @for (tech of getTechList(Experiencia); track tech) {
+                        <span class="tech-pill py-1 px-2" style="font-size: 0.8rem;">
+                          <i class="bi bi-check2 text-primary"></i> {{ tech }}
+                        </span>
+                      }
+                    </div>
+                  </div>
+                }
               </div>
             </div>
           } @empty {

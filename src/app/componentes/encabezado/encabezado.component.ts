@@ -10,6 +10,7 @@ import { TokenService } from 'src/app/service/token.service';
 })
 export class EncabezadoComponent implements OnInit {
   isLogged = false;
+  userName = '';
   showDropdown = false;
   isDark = false;
 
@@ -24,6 +25,7 @@ export class EncabezadoComponent implements OnInit {
 
   checkLoginStatus(): void {
     this.isLogged = !!this.tokenService.getToken();
+    this.userName = this.tokenService.getUserName() || 'Usuario';
   }
 
   Login(): void {

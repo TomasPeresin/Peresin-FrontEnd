@@ -1,32 +1,73 @@
-<section class="vh-100" style="background-color: #508bfc;">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-              <h3 class="mb-5">Insertar nueva experiencia</h3>
-              <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-                <div class="form-outline mb-4">
-                    <input type="text" id="nombreE" name="nombreE" class="form-control form-control-lg" [(ngModel)]="nombreE" required/>
-                    <label for="nombreE">Nombre de la experiencia</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="text" id="descripcionE" name="descripcionE" class="form-control form-control-lg" [(ngModel)]="descripcionE" required />
-                    <label class="form-label" for="descripcionE">Descripcion</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="number" id="fechaInicio" name="fechaInicio" class="form-control form-control-lg " min="1960" max="2023" [(ngModel)]="fechaInicio" required />
-                    <label class="form-label" for="fechaInicio">Fecha inicio de la experiencia</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="number" id="fechaFin" name="fechaFin" class="form-control form-control-lg" min="1960" max="2023" [(ngModel)]="fechaFin" required />
-                    <label class="form-label" for="fechaFin">Fecha fin de la experiencia</label>
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Insertar experiencia</button>
-              </form>
-            </div>
+<section class="form-page-wrapper">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="form-card shadow-lg">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h3 class="m-0 font-weight-bold">Nueva Experiencia</h3>
+            <button type="button" class="btn btn-sm btn-outline-modern" routerLink="/">
+              <i class="bi bi-arrow-left me-1"></i> Volver
+            </button>
           </div>
+
+          <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+            <div class="mb-3">
+              <label for="nombreE" class="form-label font-weight-bold">Nombre del Rol / Puesto *</label>
+              <input type="text" id="nombreE" name="nombreE" class="form-control" [(ngModel)]="nombreE" placeholder="Ej: Desarrollador Backend Java" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="descripcionE" class="form-label font-weight-bold">Descripción de responsabilidades y logros *</label>
+              <textarea id="descripcionE" name="descripcionE" class="form-control" rows="4" [(ngModel)]="descripcionE" placeholder="Detalla las tareas, impacto y soluciones desarrolladas..." required></textarea>
+            </div>
+
+            <!-- Lenguajes y Herramientas utilizadas -->
+            <div class="mb-3">
+              <label for="tecnologias" class="form-label font-weight-bold">Lenguajes y Herramientas utilizadas</label>
+              <input
+                type="text"
+                id="tecnologias"
+                name="tecnologias"
+                class="form-control"
+                [(ngModel)]="tecnologias"
+                placeholder="Ej: Java 17, Spring Boot, MySQL, Docker, Postman, Scrum"
+              />
+              <small class="text-muted d-block mt-1">Ingresa las tecnologías separadas por coma o haz clic en las sugerencias:</small>
+              
+              <!-- Sugerencias Rápidas -->
+              <div class="d-flex flex-wrap gap-1 mt-2">
+                @for (sug of sugerencias; track sug) {
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-modern py-0 px-2"
+                    style="font-size: 0.75rem;"
+                    (click)="agregarSugerencia(sug)"
+                  >
+                    + {{ sug }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6 mb-4">
+                <label for="fechaInicio" class="form-label font-weight-bold">Año Inicio *</label>
+                <input type="number" id="fechaInicio" name="fechaInicio" class="form-control" min="1980" max="2035" [(ngModel)]="fechaInicio" placeholder="2021" required />
+              </div>
+              <div class="col-6 mb-4">
+                <label for="fechaFin" class="form-label font-weight-bold">Año Fin *</label>
+                <input type="number" id="fechaFin" name="fechaFin" class="form-control" min="1980" max="2035" [(ngModel)]="fechaFin" placeholder="2024" required />
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary-modern justify-content-center py-2" type="submit" [disabled]="!f.valid">
+                <i class="bi bi-check2-circle me-1"></i> Guardar Experiencia
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 </section>

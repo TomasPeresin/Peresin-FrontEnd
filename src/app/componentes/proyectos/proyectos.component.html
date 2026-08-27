@@ -24,16 +24,16 @@
         Todos
       </button>
       <button class="filter-chip" [class.active]="filtroActivo === 'backend'" (click)="setFiltro('backend')">
-        <i class="bi bi-hdd-network me-1"></i> Backend y APIs
+        <i class="bi bi-hdd-network me-1"></i> Backend & APIs
       </button>
       <button class="filter-chip" [class.active]="filtroActivo === 'funcional'" (click)="setFiltro('funcional')">
         <i class="bi bi-diagram-3 me-1"></i> Analista Funcional
       </button>
       <button class="filter-chip" [class.active]="filtroActivo === 'datos'" (click)="setFiltro('datos')">
-        <i class="bi bi-database me-1"></i> Datos y SQL
+        <i class="bi bi-database me-1"></i> Datos & SQL
       </button>
       <button class="filter-chip" [class.active]="filtroActivo === 'qa'" (click)="setFiltro('qa')">
-        <i class="bi bi-check2-circle me-1"></i> QA y Testing
+        <i class="bi bi-shield-check me-1"></i> QA & Testing
       </button>
     </div>
 
@@ -57,6 +57,16 @@
 
             <!-- Project Content -->
             <div class="card-body p-4 d-flex flex-column flex-grow-1">
+              <!-- Category Badges -->
+              <div class="d-flex flex-wrap gap-1 mb-2">
+                @for (cat of getProjectCategories(Proyecto); track cat.id) {
+                  <span class="badge py-1 px-2 fw-semibold" [ngClass]="cat.badgeClass" style="font-size: 0.75rem;">
+                    <i class="bi me-1" [ngClass]="cat.icon"></i>
+                    {{ cat.label }}
+                  </span>
+                }
+              </div>
+
               <h3 class="project-title mb-2">{{ Proyecto.nombre }}</h3>
               
               <p class="project-description text-secondary mb-4 flex-grow-1">

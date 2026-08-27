@@ -1,36 +1,55 @@
-<section class="vh-100" style="background-color: #508bfc;">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-              <h3 class="mb-5">Agregar educacion</h3>
-              <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
-                <div class="form-outline mb-4">
-                    <input type="text" id="institucionE" name="institucionE" class="form-control form-control-lg" [(ngModel)]="institucionE" required/>
-                    <label for="institucionE">Nombre de la institucion</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="text" id="tituloE" name="tituloE" class="form-control form-control-lg" [(ngModel)]="tituloE" required />
-                    <label class="form-label" for="tituloE">Titulo</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="text" id="estadoE" name="estadoE" class="form-control form-control-lg" [(ngModel)]="estadoE" required/>
-                    <label for="estadoE">Estado de la educacion (Finalizado/Cursando)</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="number" id="fechaInicio" name="fechaInicio" class="form-control form-control-lg " min="1960" max="2023" [(ngModel)]="fechaInicio" required />
-                    <label class="form-label" for="fechaInicio">Fecha inicio del cursado</label>
-                </div>
-                <div class="form-outline mb-4">
-                    <input type="number" id="fechaFin" name="fechaFin" class="form-control form-control-lg" min="1960" max="2023" [(ngModel)]="fechaFin" required />
-                    <label class="form-label" for="fechaFin">Fecha fin del cursado</label>
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir educacion</button>
-              </form>
-            </div>
+<section class="form-page-wrapper">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="form-card shadow-lg">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h3 class="m-0 font-weight-bold">Nueva Educación</h3>
+            <button type="button" class="btn btn-sm btn-outline-modern" routerLink="/">
+              <i class="bi bi-arrow-left me-1"></i> Volver
+            </button>
           </div>
+
+          <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+            <div class="mb-3">
+              <label for="institucionE" class="form-label">Nombre de la Institución *</label>
+              <input type="text" id="institucionE" name="institucionE" class="form-control" [(ngModel)]="institucionE" placeholder="Ej: Universidad Nacional del Litoral" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="tituloE" class="form-label">Título / Carrera *</label>
+              <input type="text" id="tituloE" name="tituloE" class="form-control" [(ngModel)]="tituloE" placeholder="Ej: Licenciatura en Sistemas" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="estadoE" class="form-label">Estado de la Educación *</label>
+              <select id="estadoE" name="estadoE" class="form-select" [(ngModel)]="estadoE" required>
+                <option value="" disabled selected>Selecciona el estado</option>
+                <option value="Finalizado">Finalizado</option>
+                <option value="En curso">En curso</option>
+                <option value="Pausado">Pausado</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="col-6 mb-4">
+                <label for="fechaInicio" class="form-label">Año Inicio *</label>
+                <input type="number" id="fechaInicio" name="fechaInicio" class="form-control" min="1980" max="2035" [(ngModel)]="fechaInicio" placeholder="2018" required />
+              </div>
+              <div class="col-6 mb-4">
+                <label for="fechaFin" class="form-label">Año Fin *</label>
+                <input type="number" id="fechaFin" name="fechaFin" class="form-control" min="1980" max="2035" [(ngModel)]="fechaFin" placeholder="2023" required />
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary-modern justify-content-center py-2" type="submit" [disabled]="!f.valid">
+                <i class="bi bi-check2-circle me-1"></i> Guardar Educación
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
