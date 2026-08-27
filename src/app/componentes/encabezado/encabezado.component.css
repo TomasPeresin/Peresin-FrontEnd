@@ -1,81 +1,155 @@
-/* Navbar base */
-.navbar {
+/* Modern Glassmorphic Navbar */
+.modern-navbar {
+  background-color: var(--navbar-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.85rem 0;
   transition: all 0.3s ease;
+  z-index: 1030;
 }
 
-.navbar-toggler {
-  border: none;
-  font-size: 1.5rem;
-  transition: transform 0.3s ease;
+/* Brand styling */
+.brand-badge {
+  width: 38px;
+  height: 38px;
+  background: var(--accent-gradient);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px var(--accent-glow);
 }
 
-/* Logo con animación */
-.logo-animation {
-  animation: logoSpin 2s infinite;
+.brand-text {
+  font-size: 1.15rem;
+  color: var(--text-main);
 }
 
-.btn-theme {
-  border: none;
-  background: transparent;
-  color: var(--bs-body-color);
-  font-size: 1.3rem;
-  transition: all 0.3s ease;
+/* Menu links */
+.nav-menu .nav-link {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-.btn-theme:hover {
-  transform: scale(1.2);
-  color: var(--accent);
+.nav-menu .nav-link:hover {
+  color: var(--accent-primary);
+  background-color: var(--accent-light);
 }
 
-@keyframes logoSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Icon Buttons */
+.btn-icon-link {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
 }
 
-/* Iconos de redes sociales */
-.social-icon i {
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
-  transition: transform 0.2s ease;
-}
-
-.social-icon:hover i {
-  transform: scale(1.2);
-}
-
-/* Botones de autenticación */
-.btn-login, .btn-logout {
-  color: var(--bs-body-color);
-  border: 2px solid var(--bs-body-color);
-  border-radius: 5px;
-  transition: all 0.5s ease;
-}
-
-.btn-login:hover, .btn-logout:hover {
-  background-color: var(--bs-body-color);
-  color: var(--bs-body-bg);
-  border: 2px solid var(--bs-body-color);
-  border-radius: 5px;
-  transition: all 0.5s ease;
+.btn-icon-link:hover {
+  background-color: var(--bg-surface-secondary);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
   transform: translateY(-2px);
 }
 
-/* Dropdown */
+/* Theme Toggle Button */
+.btn-theme-toggle {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-theme-toggle:hover {
+  background-color: var(--bg-surface-secondary);
+  border-color: var(--accent-primary);
+  transform: rotate(15deg) scale(1.05);
+}
+
+/* Login buttons */
+.btn-login-compact {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.btn-login-compact:hover {
+  background-color: var(--bg-surface-secondary);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.btn-admin-logged {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid #10b981;
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+/* Custom Toggler */
+.custom-toggler {
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 1.4rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  background: var(--bg-surface);
+}
+
 .dropdown-menu {
-  background-color: var(--dark-bg);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  margin-top: 0.5rem;
 }
 
 .dropdown-item {
-  color: white;
+  color: var(--text-main);
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
 }
 
 .dropdown-item:hover {
-  background-color: var(--hover-bg);
+  background-color: var(--bg-surface-secondary);
 }
 
-/* Responsividad */
-@media (max-width: 992px) {
-  .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill='white' d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z'/%3e%3c/svg%3e");
+@media (max-width: 991px) {
+  .nav-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    justify-content: flex-start;
   }
 }

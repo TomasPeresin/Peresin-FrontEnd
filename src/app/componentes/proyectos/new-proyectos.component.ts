@@ -9,26 +9,27 @@ import { SProyectoService } from 'src/app/service/s-proyecto.service';
     styleUrls: ['./new-proyectos.component.css'],
     standalone: false
 })
-export class NewProyectosComponent implements OnInit{
-  nombre: String = '';
-  descripcion: String = '';
-  fecha: number = 0;
-  link: String = '';
+export class NewProyectosComponent implements OnInit {
+  nombre: string = '';
+  descripcion: string = '';
+  fecha: number = new Date().getFullYear();
+  link: string = '';
+  img: string = '';
 
-  constructor(private sProyecto: SProyectoService, private router: Router){}
+  constructor(private sProyecto: SProyectoService, private router: Router) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  onCreate(): void{
-    const proyectos = new Proyecto(this.nombre, this.descripcion, this.fecha, this.link);
-    this.sProyecto.save(proyectos).subscribe(data =>{
-      alert("Proyecto añadido"); 
-      this.router.navigate(['']);
-    }, err =>{
-      alert("Proyecto fallo");
-      this.router.navigate(['']);
-    }
-    )
+  onCreate(): void {
+    const proyecto = new Proyecto(this.nombre, this.descripcion, this.fecha, this.link, this.img);
+    this.sProyecto.save(proyecto).subscribe(
+      data => {
+        alert("Proyecto añadido correctamente");
+        this.router.navigate(['']);
+      },
+      err => {
+        alert("Error al añadir el proyecto. Verifica los campos.");
+      }
+    );
   }
 }

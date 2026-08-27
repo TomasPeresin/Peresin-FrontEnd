@@ -28,7 +28,7 @@ export class SignInComponent implements OnInit {
       alert("Usuario añadido");
       this.router.navigate(['']);
       }, err => {
-        alert("Nuevo usuario fallo");
+        alert("Error al añadir usuario: " + err.message);
         this.router.navigate(['']);
         });
   }

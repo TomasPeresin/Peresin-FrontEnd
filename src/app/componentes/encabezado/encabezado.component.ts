@@ -42,6 +42,13 @@ export class EncabezadoComponent implements OnInit {
     }
   }
 
+  closeNavbar(): void {
+    const navbar = document.getElementById('navbarSupportedContent');
+    if (navbar && navbar.classList.contains('show')) {
+      navbar.classList.remove('show');
+    }
+  }
+
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }

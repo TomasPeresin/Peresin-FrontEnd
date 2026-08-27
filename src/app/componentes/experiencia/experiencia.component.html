@@ -1,50 +1,69 @@
-<div class="row">
-  <div class="col-12">
-    <div class="container-fluid">
-      <div class="row">
-        <h2>-Experiencia Laboral</h2>
-        <div class="col-lg-2">
-          @if (isLogged) {
-            <button type="button" class="btn btn-light" routerLink="/nuevaexp">
-              Nueva Experiencia
-            </button>
-          }
+<section id="experiencia" class="section-wrapper bg-surface-alt">
+  <div class="container">
+    <!-- Header -->
+    <div class="section-header">
+      <span class="section-badge">Trayectoria</span>
+      <h2 class="section-title">Experiencia <span class="text-gradient">Profesional</span></h2>
+      <p class="section-subtitle">
+        Desempeño en roles técnicos, desarrollo de soluciones, análisis funcional y trabajo en equipo.
+      </p>
+
+      <!-- Admin Add Button -->
+      @if (isLogged) {
+        <div class="mt-3">
+          <button type="button" class="btn btn-primary-modern" routerLink="/nuevaexp">
+            <i class="bi bi-plus-circle me-1"></i> Nueva Experiencia
+          </button>
         </div>
-        <div class="col-1"></div>
-        <div class="col-11">
-          <table class="table">
-            <tbody>
-              @for (Experiencia of expe; track Experiencia) {
-                <tr>
-                  <!--Nombre de la experiencia-->
-                  <td><h5>{{Experiencia.nombreE}}</h5></td>
-                  <!-- Descripcion de la experiencia-->
-                  <td>{{Experiencia.descripcionE}}</td>
-                  <!-- -->
-                  <td>{{Experiencia.fechaInicio}}</td>
-                  <!-- -->
-                  <td>{{Experiencia.fechaFin}}</td>
-                  <!--Editar-->
+      }
+    </div>
+
+    <!-- Timeline Container -->
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="timeline-container">
+          @for (Experiencia of expe; track Experiencia.id) {
+            <div class="timeline-item">
+              <!-- Timeline Marker -->
+              <div class="timeline-marker">
+                <i class="bi bi-briefcase-fill"></i>
+              </div>
+
+              <!-- Timeline Content Card -->
+              <div class="timeline-content card-modern p-4">
+                <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
+                  <div>
+                    <h3 class="timeline-title mb-1">{{ Experiencia.nombreE }}</h3>
+                    <span class="timeline-period">
+                      <i class="bi bi-calendar3 me-1"></i> {{ Experiencia.fechaInicio }} — {{ Experiencia.fechaFin }}
+                    </span>
+                  </div>
+
+                  <!-- Admin Action Buttons -->
                   @if (isLogged) {
-                    <td>
-                      <button class="btn btn-light" type="button" routerLink="/editexp/{{Experiencia.id}}">
+                    <div class="d-flex gap-2">
+                      <button class="btn-action-admin edit" title="Editar experiencia" [routerLink]="['/editexp', Experiencia.id]">
                         <i class="bi bi-pencil-fill"></i>
                       </button>
-                    </td>
-                  }
-                  <!--Borrar-->
-                  @if (isLogged) {
-                    <td>
-                      <button class="btn btn-danger" type="button" (click)="delete(Experiencia.id)">
+                      <button class="btn-action-admin delete" title="Eliminar experiencia" (click)="delete(Experiencia.id)">
                         <i class="bi bi-trash3-fill"></i>
-                      </button></td>
-                    }
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
+                      </button>
+                    </div>
+                  }
+                </div>
+
+                <p class="timeline-description text-secondary mb-0">
+                  {{ Experiencia.descripcionE }}
+                </p>
+              </div>
+            </div>
+          } @empty {
+            <div class="text-center py-4">
+              <p class="text-muted">No se registran experiencias laborales cargadas.</p>
+            </div>
+          }
         </div>
       </div>
     </div>
   </div>
+</section>

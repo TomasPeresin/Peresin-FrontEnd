@@ -1,34 +1,148 @@
-<div class="row">
-  <div class="col-12">
-    <div class="container-fluid">
-      <div class="row">
-        <h2>-Soft/Hard Skills</h2>
-        <div class="col-lg-2">
+<section id="skills" class="section-wrapper bg-surface-alt">
+  <div class="container">
+    <!-- Header -->
+    <div class="section-header">
+      <span class="section-badge">Competencias</span>
+      <h2 class="section-title">Habilidades y <span class="text-gradient">Tecnologías</span></h2>
+      <p class="section-subtitle">
+        Stack técnico y metodologías aplicadas en desarrollo backend, análisis funcional, bases de datos y calidad de software.
+      </p>
+
+      <!-- Admin Add Button -->
+      @if (isLogged) {
+        <div class="mt-3">
+          <button type="button" class="btn btn-primary-modern" routerLink="/nuevaskill">
+            <i class="bi bi-plus-circle me-1"></i> Agregar Nueva Habilidad
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Categorized Skill Cards Grid -->
+    <div class="row g-4 mb-5">
+      <!-- 1. Backend y Arquitectura -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card-modern skill-category-card p-4 h-100">
+          <div class="skill-category-icon bg-primary-subtle text-primary">
+            <i class="bi bi-hdd-network"></i>
+          </div>
+          <h3 class="skill-category-title mb-3">Backend y APIs</h3>
+          <ul class="custom-bullets bullets-check">
+            <li><strong>Java</strong> (8, 11, 17+)</li>
+            <li><strong>Spring Boot</strong> y Security</li>
+            <li><strong>Spring Data JPA</strong> y Hibernate</li>
+            <li><strong>RESTful APIs</strong> y JWT</li>
+            <li><strong>Docker</strong> y Microservicios</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2. Analista Funcional -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card-modern skill-category-card p-4 h-100">
+          <div class="skill-category-icon bg-info-subtle text-info">
+            <i class="bi bi-diagram-3"></i>
+          </div>
+          <h3 class="skill-category-title mb-3">Análisis Funcional</h3>
+          <ul class="custom-bullets bullets-check">
+            <li><strong>Relevamiento</strong> Funcional</li>
+            <li><strong>Historias de Usuario</strong></li>
+            <li><strong>Diagramas UML</strong> / Casos de Uso</li>
+            <li><strong>Metodología Scrum</strong> / Ágil</li>
+            <li><strong>Documentación Técnica</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3. Bases de Datos y SQL -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card-modern skill-category-card p-4 h-100">
+          <div class="skill-category-icon bg-warning-subtle text-warning">
+            <i class="bi bi-database"></i>
+          </div>
+          <h3 class="skill-category-title mb-3">Datos y SQL</h3>
+          <ul class="custom-bullets bullets-check">
+            <li><strong>MySQL</strong> y PostgreSQL</li>
+            <li><strong>Modelado DER</strong> (Normalización)</li>
+            <li><strong>Consultas SQL</strong> complejas</li>
+            <li><strong>Integridad y Índices</strong></li>
+            <li><strong>Análisis y Reportes</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4. QA y Testing -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card-modern skill-category-card p-4 h-100">
+          <div class="skill-category-icon bg-success-subtle text-success">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h3 class="skill-category-title mb-3">QA y Testing</h3>
+          <ul class="custom-bullets bullets-check">
+            <li><strong>Diseño de Casos de Prueba</strong></li>
+            <li><strong>Testing de APIs</strong> (Postman)</li>
+            <li><strong>Pruebas Funcionales</strong></li>
+            <li><strong>Reporte de Incidencias</strong></li>
+            <li><strong>Criterios de Aceptación</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Custom Skills from Database -->
+    @if (skill.length > 0) {
+      <div class="card-modern p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+          <h4 class="h5 font-weight-bold m-0 d-flex align-items-center gap-2">
+            <i class="bi bi-stars text-warning"></i> Nivel de Dominio Técnico
+          </h4>
           @if (isLogged) {
-            <button type="button" class="btn btn-light" routerLink="/nuevaskill">
-              Nueva skill
+            <button class="btn btn-sm btn-outline-modern" routerLink="/nuevaskill">
+              <i class="bi bi-plus-lg me-1"></i> Añadir otra
             </button>
           }
         </div>
-      </div>
-      <div class="row">
-        @for (Skills of skill; track Skills) {
-          <div class="text-center col-sm-6 col-md-4 col-lg-3">
-            <!--Editar-->
-            @if (isLogged) {
-              <div>
-                <button class="btn btn-light" type="button" routerLink="/editskill/{{Skills.id}}">
-                  <i class="bi bi-pencil-fill"></i>
-                </button>
-                <!--Borrar-->
-                <button class="btn btn-danger" type="button" (click)="delete(Skills.id)">
-                  <i class="bi bi-trash3-fill"></i>
-                </button>
+
+        <div class="row g-4">
+          @for (Skills of skill; track Skills.id) {
+            <div class="col-md-6 col-lg-4">
+              <div class="p-3 rounded card-modern bg-surface border">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <span class="font-weight-bold text-main">{{ Skills.nombre }}</span>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-primary-subtle text-primary font-weight-bold">{{ Skills.porcentaje }}%</span>
+                    @if (isLogged) {
+                      <div class="d-flex gap-1 ms-1">
+                        <button class="btn-action-admin edit" title="Editar skill" [routerLink]="['/editskill', Skills.id]">
+                          <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button class="btn-action-admin delete" title="Eliminar skill" (click)="delete(Skills.id)">
+                          <i class="bi bi-trash3-fill"></i>
+                        </button>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="progress" style="height: 8px; border-radius: 4px; background-color: var(--bg-surface-secondary);">
+                  <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="Skills.porcentaje" [attr.aria-valuenow]="Skills.porcentaje" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
               </div>
-            }
-          </div>
-        }
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    } @else if (isLogged) {
+      <div class="card-modern p-4 text-center">
+        <i class="bi bi-tools display-6 text-muted mb-2 d-block"></i>
+        <h5 class="font-weight-bold">Aún no has registrado tecnologías dinámicas</h5>
+        <p class="text-muted small mb-3">Puedes agregar tus tecnologías con su nivel de dominio para mostrarlas en barras de progreso.</p>
+        <div>
+          <button type="button" class="btn btn-primary-modern btn-sm" routerLink="/nuevaskill">
+            <i class="bi bi-plus-circle me-1"></i> Cargar Primera Habilidad
+          </button>
+        </div>
+      </div>
+    }
   </div>
-</div>
+</section>

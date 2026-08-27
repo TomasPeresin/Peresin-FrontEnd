@@ -1,52 +1,112 @@
-<div class="row">
-  <div class="col-12">
-    <div class="container-fluid">
-      <div class="row">
-        <h2>-Proyectos</h2>
-        <div class="col-lg-2">
-          @if (isLogged) {
-            <button type="button" class="btn btn-light" routerLink="/nuevoproyecto">
-              Nuevo proyecto
-            </button>
-          }
+<section id="proyectos" class="section-wrapper">
+  <div class="container">
+    <!-- Header -->
+    <div class="section-header">
+      <span class="section-badge">Portafolio de Trabajo</span>
+      <h2 class="section-title">Proyectos y <span class="text-gradient">Casos de Estudio</span></h2>
+      <p class="section-subtitle">
+        Desarrollos de software, arquitecturas backend, análisis de requerimientos y modelado de datos.
+      </p>
+
+      <!-- Admin Add Button -->
+      @if (isLogged) {
+        <div class="mt-3">
+          <button type="button" class="btn btn-primary-modern" routerLink="/nuevoproyecto">
+            <i class="bi bi-plus-circle me-1"></i> Agregar Proyecto
+          </button>
         </div>
-      </div>
-      <table class="table">
-        <tbody>
-          @for (Proyecto of proyectos; track Proyecto) {
-            <tr>
-              <td>
-                <h3>{{Proyecto.nombre}}</h3>
-              </td>
-              <td>
-                <h4>{{Proyecto.fecha}}</h4>
-              </td>
-              <td><p>{{Proyecto.descripcion}}</p></td>
-              <td>
-                <p>Link: </p>
-                <a href="{{Proyecto.link}}">
-                  <p>Añadir algo</p>
-                </a>
-              </td>
-              @if (isLogged) {
-                <td>
-                  <button class="btn btn-light" type="button" routerLink="/editskill/{{Proyecto.id}}">
-                    <i class="bi bi-pencil-fill"></i>
-                  </button>
-                </td>
+      }
+    </div>
+
+    <!-- Role Filter Pills -->
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4 filter-container">
+      <button class="filter-chip" [class.active]="filtroActivo === 'todos'" (click)="setFiltro('todos')">
+        Todos
+      </button>
+      <button class="filter-chip" [class.active]="filtroActivo === 'backend'" (click)="setFiltro('backend')">
+        <i class="bi bi-hdd-network me-1"></i> Backend y APIs
+      </button>
+      <button class="filter-chip" [class.active]="filtroActivo === 'funcional'" (click)="setFiltro('funcional')">
+        <i class="bi bi-diagram-3 me-1"></i> Analista Funcional
+      </button>
+      <button class="filter-chip" [class.active]="filtroActivo === 'datos'" (click)="setFiltro('datos')">
+        <i class="bi bi-database me-1"></i> Datos y SQL
+      </button>
+      <button class="filter-chip" [class.active]="filtroActivo === 'qa'" (click)="setFiltro('qa')">
+        <i class="bi bi-check2-circle me-1"></i> QA y Testing
+      </button>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="row g-4">
+      @for (Proyecto of proyectosFiltrados; track Proyecto.id) {
+        <div class="col-md-6 col-lg-4">
+          <div class="card-modern project-card h-100 d-flex flex-column">
+            <!-- Project Image / Header -->
+            <div class="project-img-wrapper">
+              @if (Proyecto.img) {
+                <img [src]="Proyecto.img" class="project-img" [alt]="Proyecto.nombre">
+              } @else {
+                <div class="project-img-fallback">
+                  <i class="bi bi-code-square fallback-icon"></i>
+                  <span class="fallback-text">{{ Proyecto.nombre }}</span>
+                </div>
               }
-              <!--Borrar-->
-              @if (isLogged) {
-                <td>
-                  <button class="btn btn-danger" type="button" (click)="delete(Proyecto.id)">
-                    <i class="bi bi-trash3-fill"></i>
-                  </button>
-                </td>
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
+              <span class="project-year-badge">{{ Proyecto.fecha }}</span>
+            </div>
+
+            <!-- Project Content -->
+            <div class="card-body p-4 d-flex flex-column flex-grow-1">
+              <h3 class="project-title mb-2">{{ Proyecto.nombre }}</h3>
+              
+              <p class="project-description text-secondary mb-4 flex-grow-1">
+                {{ Proyecto.descripcion }}
+              </p>
+
+              <!-- Footer Actions -->
+              <div class="project-actions pt-3 border-top d-flex align-items-center justify-content-between">
+                <div>
+                  @if (Proyecto.link) {
+                    @if (isGitHubLink(Proyecto.link)) {
+                      <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-modern">
+                        <i class="bi bi-github"></i> Repositorio
+                      </a>
+                    } @else if (isDocLink(Proyecto.link)) {
+                      <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-modern">
+                        <i class="bi bi-file-earmark-text"></i> Documentación
+                      </a>
+                    } @else {
+                      <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary-modern">
+                        <i class="bi bi-box-arrow-up-right"></i> Ver Proyecto
+                      </a>
+                    }
+                  }
+                </div>
+
+                <!-- Admin Action Buttons -->
+                @if (isLogged) {
+                  <div class="d-flex gap-2">
+                    <button class="btn-action-admin edit" title="Editar proyecto" [routerLink]="['/editproyecto', Proyecto.id]">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="btn-action-admin delete" title="Eliminar proyecto" (click)="delete(Proyecto.id)">
+                      <i class="bi bi-trash3-fill"></i>
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="col-12 text-center py-5">
+          <div class="empty-state">
+            <i class="bi bi-folder2-open display-4 text-muted mb-3 d-block"></i>
+            <h4 class="text-secondary">No se encontraron proyectos en esta categoría</h4>
+            <p class="text-muted">Prueba seleccionando "Todos" para ver el listado completo.</p>
+          </div>
+        </div>
+      }
     </div>
   </div>
-</div>
+</section>

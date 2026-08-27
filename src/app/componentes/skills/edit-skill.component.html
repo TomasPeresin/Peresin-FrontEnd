@@ -1,23 +1,45 @@
-<section class="vh-100" style="background-color: #508bfc;">
+<section class="form-page-wrapper py-5">
   @if (skillLab) {
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="container">
+      <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-              <h3 class="mb-5">Insertar nueva skill</h3>
-              <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
-                <div class="form-outline mb-4">
-                  <input type="text" id="nombre" name="nombre" class="form-control form-control-lg" [(ngModel)]="skillLab.nombre" required/>
-                  <label for="nombre">Nombre del skill</label>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="porcentaje" id="porcentaje" class="form-control form-control-lg" [(ngModel)]="skillLab.porcentaje" required />
-                  <label class="form-label" for="porcentaje">Porcentaje del skill</label>
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Actualizar skill</button>
-              </form>
+          <div class="card-modern p-4 p-md-5">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+              <h3 class="m-0 font-weight-bold">Modificar Habilidad</h3>
+              <button type="button" class="btn btn-sm btn-outline-modern" routerLink="/">
+                <i class="bi bi-arrow-left"></i> Volver
+              </button>
             </div>
+
+            <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
+              <div class="mb-3">
+                <label for="nombre" class="form-label font-weight-bold">Nombre de la tecnología o habilidad *</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" [(ngModel)]="skillLab.nombre" required />
+              </div>
+
+              <div class="mb-4">
+                <label for="porcentaje" class="form-label font-weight-bold d-flex justify-content-between">
+                  <span>Nivel / Porcentaje de dominio *</span>
+                  <span class="text-primary font-weight-bold">{{ skillLab.porcentaje }}%</span>
+                </label>
+                <input type="range" id="porcentajeRange" class="form-range mb-2" min="10" max="100" step="5" [(ngModel)]="skillLab.porcentaje" name="porcentajeRange" />
+                <input type="number" id="porcentaje" name="porcentaje" class="form-control" min="10" max="100" [(ngModel)]="skillLab.porcentaje" required />
+              </div>
+
+              <!-- Progress Bar Preview -->
+              <div class="mb-4">
+                <small class="text-muted d-block mb-1">Previsualización:</small>
+                <div class="progress" style="height: 10px; border-radius: 6px;">
+                  <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="skillLab.porcentaje" [attr.aria-valuenow]="skillLab.porcentaje" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary-modern" type="submit" [disabled]="!f.valid">
+                  <i class="bi bi-check2-circle"></i> Actualizar Habilidad
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
