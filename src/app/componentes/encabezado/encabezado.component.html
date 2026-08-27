@@ -1,36 +1,70 @@
-<nav class="navbar navbar-expand-sm" style="background-color: #FB8500" >
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <div class="d-flex align-items-center">
+      <!-- Logo -->
       <a class="navbar-brand" href="#">
-        <img src="../../../assets/APLogo.png" alt="#YoProgramo" width="auto" height="60px" id="APlogo">
+        <img src="../../../assets/APLogo.png" alt="Logo" width="30" height="30" class="d-inline-block align-top logo-animation">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="https://www.instagram.com/tomas_prsn/" target="_blank">
-                <i class="bi bi-instagram"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="https://github.com/TomasPeresin" target="_blank">
-                <i class="bi bi-github"></i>
-              </a>
-            </li>
-          </ul>
-          <button type="button" class="btn btn-success btn" (click)="Login()" *ngIf="!isLogged">
-            Iniciar sesion
+    </div>
+
+    <!-- Botón para móviles -->
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menú principal -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <!-- Iconos de redes sociales -->
+        <li class="nav-item social-icon">
+          <a class="nav-link" href="" target="_blank">
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="" target="_blank">
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="" target="_blank">
+            Trabajos realizados
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="" target="_blank">
+            Proyectos personales
+          </a>
+        </li>
+        <li class="nav-item social-icon">
+          <a class="nav-link" href="https://github.com/TomasPeresin" target="_blank">
+            <i class="bi bi-github"></i>
+          </a>
+        </li>
+      </ul>
+
+      <div class="d-flex">
+        <button class="btn btn-theme" (click)="toggleTheme()">
+          <i class="bi" [ngClass]="isDark ? 'bi-sun' : 'bi-moon'"></i>
+        </button>
+        <!-- Botones de autenticación -->
+        @if (!isLogged) {
+          <button type="button" class="btn btn-login" (click)="Login()">
+            Iniciar sesión
           </button>
-          <button type="button" class="btn btn-succes btn" (click)="onLogOut()" *ngIf="isLogged">
-            Cerrar sesion
-          </button>
-        </div>
+        } @else {
+          <div class="dropdown">
+            <button class="btn btn-logout dropdown-toggle" (click)="toggleDropdown()">
+              Cerrar sesión
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Perfil</a></li>
+              <li><a class="dropdown-item" href="#">Configuración</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" (click)="onLogOut()">Salir</button></li>
+            </ul>
+          </div>
+        }
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

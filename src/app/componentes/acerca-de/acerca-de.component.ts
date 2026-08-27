@@ -3,12 +3,13 @@ import { persona } from 'src/app/model/persona.model';
 import { PersonaService } from 'src/app/service/persona.service';
 
 @Component({
-  selector: 'app-acerca-de',
-  templateUrl: './acerca-de.component.html',
-  styleUrls: ['./acerca-de.component.css']
+    selector: 'app-acerca-de',
+    templateUrl: './acerca-de.component.html',
+    styleUrls: ['./acerca-de.component.css'],
+    standalone: false
 })
 export class AcercaDeComponent {
-  persona: persona = new persona("","","","")
+  persona: persona = new persona("","","","","")
 
   constructor(public personaService: PersonaService) {  }
 

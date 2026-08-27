@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Educacion } from '../model/educacion';
+import { AppConfig } from '../core/config/app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SEducacionService {
-  eduURL = 'http://backendpti.onrender.com/educacion/'
+  eduURL = `${AppConfig.url}/educacion/`;
   constructor(private httpClient : HttpClient) { }
 
   public lista(): Observable<Educacion[]>{

@@ -4,9 +4,10 @@ import { Educacion } from 'src/app/model/educacion';
 import { SEducacionService } from 'src/app/service/s-educacion.service';
 
 @Component({
-  selector: 'app-edit-educacion',
-  templateUrl: './edit-educacion.component.html',
-  styleUrls: ['./edit-educacion.component.css']
+    selector: 'app-edit-educacion',
+    templateUrl: './edit-educacion.component.html',
+    styleUrls: ['./edit-educacion.component.css'],
+    standalone: false
 })
 export class EditEducacionComponent implements OnInit{
   eduLab: Educacion = null;

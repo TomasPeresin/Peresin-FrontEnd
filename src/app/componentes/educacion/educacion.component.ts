@@ -4,22 +4,24 @@ import { SEducacionService } from 'src/app/service/s-educacion.service';
 import { TokenService } from 'src/app/service/token.service';
 
 @Component({
-  selector: 'app-educacion',
-  templateUrl: './educacion.component.html',
-  styleUrls: ['./educacion.component.css']
+    selector: 'app-educacion',
+    templateUrl: './educacion.component.html',
+    styleUrls: ['./educacion.component.css'],
+    standalone: false
 })
 export class EducacionComponent implements OnInit {
   educacion: Educacion[] = [];
 
   constructor(private sEducacion: SEducacionService, private tokenService: TokenService){ }
-
+  
   isLogged = false;
 
   ngOnInit(): void {
     this.cargarEducacion();
     if (this.tokenService.getToken()){
       this.isLogged = true;
-    }else{
+    }
+    else{
       this.isLogged = false;
     }
   }

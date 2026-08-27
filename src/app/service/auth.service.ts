@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { JwtDto } from '../model/jwt-dto';
 import { LoginUsuario } from '../model/login-usuario';
 import { NuevoUsuario } from '../model/nuevo-usuario';
+import { AppConfig } from '../core/config/app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  authURL = 'https://backendpti.onrender.com/auth/';
+  authURL = `${AppConfig.url}/auth/`;
 
   constructor(private httpClient: HttpClient) { }
 

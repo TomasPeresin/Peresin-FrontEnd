@@ -4,9 +4,10 @@ import { Hardysoft } from 'src/app/model/hardysoft';
 import { SHysskillsService } from 'src/app/service/s-hysskills.service';
 
 @Component({
-  selector: 'app-new-skills',
-  templateUrl: './new-skills.component.html',
-  styleUrls: ['./new-skills.component.css']
+    selector: 'app-new-skills',
+    templateUrl: './new-skills.component.html',
+    styleUrls: ['./new-skills.component.css'],
+    standalone: false
 })
 export class NewSkillsComponent implements OnInit{
   nombre: string='';

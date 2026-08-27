@@ -4,9 +4,10 @@ import { SHysskillsService } from 'src/app/service/s-hysskills.service';
 import { TokenService } from 'src/app/service/token.service';
 
 @Component({
-  selector: 'app-skills',
-  templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.css']
+    selector: 'app-skills',
+    templateUrl: './skills.component.html',
+    styleUrls: ['./skills.component.css'],
+    standalone: false
 })
 export class SkillsComponent implements OnInit {
   skill: Hardysoft[] = [];

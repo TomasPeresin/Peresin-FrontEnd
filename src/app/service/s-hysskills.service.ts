@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Hardysoft } from '../model/hardysoft';
+import { AppConfig } from '../core/config/app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SHysskillsService {
-  hysURL = 'http://backendpti.onrender.com/skill/'
+  hysURL = `${AppConfig.url}/skill/`;
   constructor(private httpClient : HttpClient) { }
 
   public lista(): Observable<Hardysoft[]>{

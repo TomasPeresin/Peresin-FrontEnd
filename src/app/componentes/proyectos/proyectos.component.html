@@ -1,15 +1,52 @@
-<div class="container-fluid">
-    <h2>-Proyectos</h2>
-  <div class="row"> 
-    <h3>Portfolio Web</h3> <h4>2022/2023</h4> 
-  </div>
-  <div class="row">
-    <p>
-      Entre mitad y fin de 2022 e inicios de 2023 participe en Argentina Programa, aprendiendo a desarrollar y desplegar
-      un portfolio web desde el back-end hasta el front-end, que estes aca es la prueba de ello.
-    </p>
-  </div>
-  <div class="row">
-    <img>
+<div class="row">
+  <div class="col-12">
+    <div class="container-fluid">
+      <div class="row">
+        <h2>-Proyectos</h2>
+        <div class="col-lg-2">
+          @if (isLogged) {
+            <button type="button" class="btn btn-light" routerLink="/nuevoproyecto">
+              Nuevo proyecto
+            </button>
+          }
+        </div>
+      </div>
+      <table class="table">
+        <tbody>
+          @for (Proyecto of proyectos; track Proyecto) {
+            <tr>
+              <td>
+                <h3>{{Proyecto.nombre}}</h3>
+              </td>
+              <td>
+                <h4>{{Proyecto.fecha}}</h4>
+              </td>
+              <td><p>{{Proyecto.descripcion}}</p></td>
+              <td>
+                <p>Link: </p>
+                <a href="{{Proyecto.link}}">
+                  <p>Añadir algo</p>
+                </a>
+              </td>
+              @if (isLogged) {
+                <td>
+                  <button class="btn btn-light" type="button" routerLink="/editskill/{{Proyecto.id}}">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                </td>
+              }
+              <!--Borrar-->
+              @if (isLogged) {
+                <td>
+                  <button class="btn btn-danger" type="button" (click)="delete(Proyecto.id)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
