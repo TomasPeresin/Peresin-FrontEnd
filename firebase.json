@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/peresin-angular",
+    "public": "dist/peresin-angular/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

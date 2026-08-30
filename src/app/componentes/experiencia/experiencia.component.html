@@ -22,59 +22,120 @@
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <div class="timeline-container">
-          @for (Experiencia of expe; track Experiencia.id) {
+          <!-- ESTADO 1: CARGANDO (Items integrados en el timeline) -->
+          @if (state === 'loading') {
             <div class="timeline-item">
-              <!-- Timeline Marker -->
               <div class="timeline-marker">
-                <i class="bi bi-briefcase-fill"></i>
+                <i class="bi bi-hourglass-split"></i>
               </div>
-
-              <!-- Timeline Content Card -->
               <div class="timeline-content card-modern p-4">
                 <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
                   <div>
-                    <h3 class="timeline-title mb-1">{{ Experiencia.nombreE }}</h3>
+                    <h3 class="timeline-title mb-1">⏳ Sincronizando trayectoria profesional...</h3>
                     <span class="timeline-period">
-                      <i class="bi bi-calendar3 me-1"></i> {{ Experiencia.fechaInicio }} — {{ Experiencia.fechaFin }}
+                      <i class="bi bi-cloud-arrow-down me-1"></i> Conectando con el servidor
                     </span>
                   </div>
+                </div>
+                <p class="timeline-description text-secondary mb-3">
+                  Recuperando los hitos laborales de la base de datos mientras el backend termina de despertarse.
+                </p>
+                <div class="wake-progress-track m-0" style="max-width: 100%;">
+                  <div class="wake-progress-bar"></div>
+                </div>
+              </div>
+            </div>
 
-                  <!-- Admin Action Buttons -->
-                  @if (isLogged) {
-                    <div class="d-flex gap-2">
-                      <button class="btn-action-admin edit" title="Editar experiencia" [routerLink]="['/editexp', Experiencia.id]">
-                        <i class="bi bi-pencil-fill"></i>
-                      </button>
-                      <button class="btn-action-admin delete" title="Eliminar experiencia" (click)="delete(Experiencia.id)">
-                        <i class="bi bi-trash3-fill"></i>
-                      </button>
+            <div class="timeline-item">
+              <div class="timeline-marker">
+                <i class="bi bi-briefcase-fill"></i>
+              </div>
+              <div class="timeline-content card-modern skeleton-card p-4">
+                <div class="skeleton-box skeleton-title mb-2"></div>
+                <div class="skeleton-box skeleton-pill mb-3 w-25"></div>
+                <div class="skeleton-box skeleton-text mb-2"></div>
+                <div class="skeleton-box skeleton-text w-75 mb-3"></div>
+                <div class="pt-3 border-top d-flex gap-2">
+                  <div class="skeleton-box skeleton-pill"></div>
+                  <div class="skeleton-box skeleton-pill"></div>
+                  <div class="skeleton-box skeleton-pill"></div>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- ESTADO 2: ERROR -->
+          @else if (state === 'error') {
+            <div class="timeline-item">
+              <div class="timeline-marker" style="background: #ef4444;">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+              </div>
+              <div class="timeline-content card-modern p-4 text-center">
+                <h3 class="timeline-title mb-1">Error de sincronización</h3>
+                <p class="text-muted mb-3">No se pudieron recuperar las experiencias laborales.</p>
+                <button type="button" class="btn btn-sm btn-outline-modern" (click)="cargarExperiencia()">
+                  <i class="bi bi-arrow-clockwise me-1"></i> Reintentar conexión
+                </button>
+              </div>
+            </div>
+          }
+
+          <!-- ESTADO 3: ÉXITO -->
+          @else if (state === 'success') {
+            @for (Experiencia of expe; track Experiencia.id) {
+              <div class="timeline-item">
+                <!-- Timeline Marker -->
+                <div class="timeline-marker">
+                  <i class="bi bi-briefcase-fill"></i>
+                </div>
+
+                <!-- Timeline Content Card -->
+                <div class="timeline-content card-modern p-4">
+                  <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
+                    <div>
+                      <h3 class="timeline-title mb-1">{{ Experiencia.nombreE }}</h3>
+                      <span class="timeline-period">
+                        <i class="bi bi-calendar3 me-1"></i> {{ Experiencia.fechaInicio }} — {{ Experiencia.fechaFin }}
+                      </span>
+                    </div>
+
+                    <!-- Admin Action Buttons -->
+                    @if (isLogged) {
+                      <div class="d-flex gap-2">
+                        <button class="btn-action-admin edit" title="Editar experiencia" [routerLink]="['/editexp', Experiencia.id]">
+                          <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button class="btn-action-admin delete" title="Eliminar experiencia" (click)="delete(Experiencia.id)">
+                          <i class="bi bi-trash3-fill"></i>
+                        </button>
+                      </div>
+                    }
+                  </div>
+
+                  <p class="timeline-description text-secondary mb-0">
+                    {{ Experiencia.descripcionE }}
+                  </p>
+
+                  <!-- Tecnologías y Herramientas utilizadas -->
+                  @if (getTechList(Experiencia).length > 0) {
+                    <div class="timeline-tech-stack mt-3 pt-3 border-top">
+                      <div class="d-flex flex-wrap align-items-center gap-2">
+                        <small class="text-muted fw-semibold me-1"><i class="bi bi-tools me-1"></i> Tecnologías & Herramientas:</small>
+                        @for (tech of getTechList(Experiencia); track tech) {
+                          <span class="tech-pill py-1 px-2" style="font-size: 0.8rem;">
+                            <i class="bi bi-check2 text-primary"></i> {{ tech }}
+                          </span>
+                        }
+                      </div>
                     </div>
                   }
                 </div>
-
-                <p class="timeline-description text-secondary mb-0">
-                  {{ Experiencia.descripcionE }}
-                </p>
-
-                <!-- Tecnologías y Herramientas utilizadas -->
-                @if (getTechList(Experiencia).length > 0) {
-                  <div class="timeline-tech-stack mt-3 pt-3 border-top">
-                    <div class="d-flex flex-wrap align-items-center gap-2">
-                      <small class="text-muted fw-semibold me-1"><i class="bi bi-tools me-1"></i> Tecnologías & Herramientas:</small>
-                      @for (tech of getTechList(Experiencia); track tech) {
-                        <span class="tech-pill py-1 px-2" style="font-size: 0.8rem;">
-                          <i class="bi bi-check2 text-primary"></i> {{ tech }}
-                        </span>
-                      }
-                    </div>
-                  </div>
-                }
               </div>
-            </div>
-          } @empty {
-            <div class="text-center py-4">
-              <p class="text-muted">No se registran experiencias laborales cargadas.</p>
-            </div>
+            } @empty {
+              <div class="text-center py-4">
+                <p class="text-muted">No se registran experiencias laborales cargadas.</p>
+              </div>
+            }
           }
         </div>
       </div>

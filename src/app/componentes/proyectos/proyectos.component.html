@@ -18,105 +18,182 @@
       }
     </div>
 
-    <!-- Role Filter Pills -->
-    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4 filter-container">
-      <button class="filter-chip" [class.active]="filtroActivo === 'todos'" (click)="setFiltro('todos')">
-        Todos
-      </button>
-      <button class="filter-chip" [class.active]="filtroActivo === 'backend'" (click)="setFiltro('backend')">
-        <i class="bi bi-hdd-network me-1"></i> Backend & APIs
-      </button>
-      <button class="filter-chip" [class.active]="filtroActivo === 'funcional'" (click)="setFiltro('funcional')">
-        <i class="bi bi-diagram-3 me-1"></i> Analista Funcional
-      </button>
-      <button class="filter-chip" [class.active]="filtroActivo === 'datos'" (click)="setFiltro('datos')">
-        <i class="bi bi-database me-1"></i> Datos & SQL
-      </button>
-      <button class="filter-chip" [class.active]="filtroActivo === 'qa'" (click)="setFiltro('qa')">
-        <i class="bi bi-shield-check me-1"></i> QA & Testing
-      </button>
-    </div>
+    <!-- ESTADO 1: CARGANDO / DESPERTANDO SERVIDOR (Cold Start) -->
+    @if (state === 'loading') {
+      <div class="server-wake-card card-modern p-4 text-center mb-5">
+        <div class="wake-icon-container mb-3">
+          <div class="coffee-icon-pulse">
+            <i class="bi bi-cup-hot-fill text-warning display-5"></i>
+          </div>
+        </div>
+        <h3 class="wake-title mb-2">
+          ☕ Despertando al servidor...
+        </h3>
+        <p class="wake-subtitle text-secondary mb-3">
+          El backend estaba durmiendo una siesta bien merecida (plan gratuito de hosting)<br class="d-none d-md-inline">
+          Le estamos preparando un café para que arranque.<br class="d-none d-md-inline">
+          ¡Enseguida carga todo!
+        </p>
 
-    <!-- Projects Grid -->
-    <div class="row g-4">
-      @for (Proyecto of proyectosFiltrados; track Proyecto.id) {
-        <div class="col-md-6 col-lg-4">
-          <div class="card-modern project-card h-100 d-flex flex-column">
-            <!-- Project Image / Header -->
-            <div class="project-img-wrapper">
-              @if (Proyecto.img) {
-                <img [src]="Proyecto.img" class="project-img" [alt]="Proyecto.nombre">
-              } @else {
-                <div class="project-img-fallback">
-                  <i class="bi bi-code-square fallback-icon"></i>
-                  <span class="fallback-text">{{ Proyecto.nombre }}</span>
+        <div class="d-inline-flex align-items-center gap-2 wake-status-pill px-3 py-2 rounded-pill">
+          <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+          <span class="wake-status-text fw-medium">{{ frasesEspera[fraseActualIndex] }}</span>
+        </div>
+
+        <div class="wake-progress-track mt-3">
+          <div class="wake-progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Skeletons Grid (Placeholder Cards) -->
+      <div class="row g-4">
+        @for (item of [1, 2, 3]; track item) {
+          <div class="col-md-6 col-lg-4">
+            <div class="card-modern project-card skeleton-card h-100 p-0">
+              <div class="skeleton-box skeleton-img"></div>
+              <div class="p-4 d-flex flex-column gap-3">
+                <div class="d-flex gap-2">
+                  <div class="skeleton-box skeleton-pill"></div>
+                  <div class="skeleton-box skeleton-pill w-25"></div>
                 </div>
-              }
-              <span class="project-year-badge">{{ Proyecto.fecha }}</span>
+                <div class="skeleton-box skeleton-title"></div>
+                <div class="skeleton-box skeleton-text"></div>
+                <div class="skeleton-box skeleton-text w-75"></div>
+                <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-2">
+                  <div class="skeleton-box skeleton-btn"></div>
+                </div>
+              </div>
             </div>
+          </div>
+        }
+      </div>
+    }
 
-            <!-- Project Content -->
-            <div class="card-body p-4 d-flex flex-column flex-grow-1">
-              <!-- Category Badges -->
-              <div class="d-flex flex-wrap gap-1 mb-2">
-                @for (cat of getProjectCategories(Proyecto); track cat.id) {
-                  <span class="badge py-1 px-2 fw-semibold" [ngClass]="cat.badgeClass" style="font-size: 0.75rem;">
-                    <i class="bi me-1" [ngClass]="cat.icon"></i>
-                    {{ cat.label }}
-                  </span>
+    <!-- ESTADO 2: ERROR AL CONECTAR CON EL SERVIDOR -->
+    @else if (state === 'error') {
+      <div class="row justify-content-center py-4">
+        <div class="col-lg-8">
+          <div class="card-modern error-wake-card p-5 text-center">
+            <div class="error-icon-wrapper mb-3">
+              <i class="bi bi-cup-straw display-3 text-warning"></i>
+            </div>
+            <h3 class="mb-2 font-weight-bold">😴 El servidor se tomó un café demasiado largo...</h3>
+            <p class="text-secondary mb-4">
+              No pudimos conectar con el backend o la respuesta tardó más de lo habitual.<br>
+              ¡No te preocupes! Dale al botón para reintentar la conexión.
+            </p>
+            <div>
+              <button type="button" class="btn btn-primary-modern px-4 py-2" (click)="cargarProyecto()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Despertar de nuevo / Reintentar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ESTADO 3: ÉXITO (Datos cargados) -->
+    @else if (state === 'success') {
+      <!-- Role Filter Pills -->
+      <div class="d-flex flex-wrap justify-content-center gap-2 mb-4 filter-container">
+        <button class="filter-chip" [class.active]="filtroActivo === 'todos'" (click)="setFiltro('todos')">
+          Todos
+        </button>
+        <button class="filter-chip" [class.active]="filtroActivo === 'backend'" (click)="setFiltro('backend')">
+          <i class="bi bi-hdd-network me-1"></i> Backend & APIs
+        </button>
+        <button class="filter-chip" [class.active]="filtroActivo === 'funcional'" (click)="setFiltro('funcional')">
+          <i class="bi bi-diagram-3 me-1"></i> Analista Funcional
+        </button>
+        <button class="filter-chip" [class.active]="filtroActivo === 'datos'" (click)="setFiltro('datos')">
+          <i class="bi bi-database me-1"></i> Datos & SQL
+        </button>
+        <button class="filter-chip" [class.active]="filtroActivo === 'qa'" (click)="setFiltro('qa')">
+          <i class="bi bi-shield-check me-1"></i> QA & Testing
+        </button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="row g-4">
+        @for (Proyecto of proyectosFiltrados; track Proyecto.id) {
+          <div class="col-md-6 col-lg-4">
+            <div class="card-modern project-card h-100 d-flex flex-column">
+              <!-- Project Image / Header -->
+              <div class="project-img-wrapper">
+                @if (Proyecto.img) {
+                  <img [src]="Proyecto.img" class="project-img" [alt]="Proyecto.nombre">
+                } @else {
+                  <div class="project-img-fallback">
+                    <i class="bi bi-code-square fallback-icon"></i>
+                    <span class="fallback-text">{{ Proyecto.nombre }}</span>
+                  </div>
                 }
+                <span class="project-year-badge">{{ Proyecto.fecha }}</span>
               </div>
 
-              <h3 class="project-title mb-2">{{ Proyecto.nombre }}</h3>
-              
-              <p class="project-description text-secondary mb-4 flex-grow-1">
-                {{ Proyecto.descripcion }}
-              </p>
-
-              <!-- Footer Actions -->
-              <div class="project-actions pt-3 border-top d-flex align-items-center justify-content-between">
-                <div>
-                  @if (Proyecto.link) {
-                    @if (isGitHubLink(Proyecto.link)) {
-                      <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-modern">
-                        <i class="bi bi-github"></i> Repositorio
-                      </a>
-                    } @else if (isDocLink(Proyecto.link)) {
-                      <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-modern">
-                        <i class="bi bi-file-earmark-text"></i> Documentación
-                      </a>
-                    } @else {
-                      <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary-modern">
-                        <i class="bi bi-box-arrow-up-right"></i> Ver Proyecto
-                      </a>
-                    }
+              <!-- Project Content -->
+              <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                <!-- Category Badges -->
+                <div class="d-flex flex-wrap gap-1 mb-2">
+                  @for (cat of getProjectCategories(Proyecto); track cat.id) {
+                    <span class="badge py-1 px-2 fw-semibold" [ngClass]="cat.badgeClass" style="font-size: 0.75rem;">
+                      <i class="bi me-1" [ngClass]="cat.icon"></i>
+                      {{ cat.label }}
+                    </span>
                   }
                 </div>
 
-                <!-- Admin Action Buttons -->
-                @if (isLogged) {
-                  <div class="d-flex gap-2">
-                    <button class="btn-action-admin edit" title="Editar proyecto" [routerLink]="['/editproyecto', Proyecto.id]">
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
-                    <button class="btn-action-admin delete" title="Eliminar proyecto" (click)="delete(Proyecto.id)">
-                      <i class="bi bi-trash3-fill"></i>
-                    </button>
+                <h3 class="project-title mb-2">{{ Proyecto.nombre }}</h3>
+                
+                <p class="project-description text-secondary mb-4 flex-grow-1">
+                  {{ Proyecto.descripcion }}
+                </p>
+
+                <!-- Footer Actions -->
+                <div class="project-actions pt-3 border-top d-flex align-items-center justify-content-between">
+                  <div>
+                    @if (Proyecto.link) {
+                      @if (isGitHubLink(Proyecto.link)) {
+                        <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-modern">
+                          <i class="bi bi-github"></i> Repositorio
+                        </a>
+                      } @else if (isDocLink(Proyecto.link)) {
+                        <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-modern">
+                          <i class="bi bi-file-earmark-text"></i> Documentación
+                        </a>
+                      } @else {
+                        <a [href]="Proyecto.link" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary-modern">
+                          <i class="bi bi-box-arrow-up-right"></i> Ver Proyecto
+                        </a>
+                      }
+                    }
                   </div>
-                }
+
+                  <!-- Admin Action Buttons -->
+                  @if (isLogged) {
+                    <div class="d-flex gap-2">
+                      <button class="btn-action-admin edit" title="Editar proyecto" [routerLink]="['/editproyecto', Proyecto.id]">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="btn-action-admin delete" title="Eliminar proyecto" (click)="delete(Proyecto.id)">
+                        <i class="bi bi-trash3-fill"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      } @empty {
-        <div class="col-12 text-center py-5">
-          <div class="empty-state">
-            <i class="bi bi-folder2-open display-4 text-muted mb-3 d-block"></i>
-            <h4 class="text-secondary">No se encontraron proyectos en esta categoría</h4>
-            <p class="text-muted">Prueba seleccionando "Todos" para ver el listado completo.</p>
+        } @empty {
+          <div class="col-12 text-center py-5">
+            <div class="empty-state">
+              <i class="bi bi-folder2-open display-4 text-muted mb-3 d-block"></i>
+              <h4 class="text-secondary">No se encontraron proyectos en esta categoría</h4>
+              <p class="text-muted">Prueba seleccionando "Todos" para ver el listado completo.</p>
+            </div>
           </div>
-        </div>
-      }
-    </div>
+        }
+      </div>
+    }
   </div>
 </section>

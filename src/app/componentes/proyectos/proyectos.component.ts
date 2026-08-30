@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Proyecto } from 'src/app/model/proyecto';
 import { SProyectoService } from 'src/app/service/s-proyecto.service';
 import { TokenService } from 'src/app/service/token.service';
+import { LoadingState } from 'src/app/model/loading-state';
 
 export interface CategoryMeta {
   id: string;
@@ -16,10 +17,21 @@ export interface CategoryMeta {
   styleUrls: ['./proyectos.component.css'],
   standalone: false
 })
-export class ProyectosComponent implements OnInit {
+export class ProyectosComponent implements OnInit, OnDestroy {
   proyectos: Proyecto[] = [];
+  state: LoadingState = 'loading';
   filtroActivo: string = 'todos';
   isLogged = false;
+
+  frasesEspera: string[] = [
+    'Le estamos cebando unos mates al servidor...',
+    'Tirándole agua fría al contenedor para que despierte...',
+    'Buscando los proyectos en la base de datos...',
+    'Haciendo un git pull de energía y cafeína...',
+    '¡Casi listo! El servidor ya se está poniendo la camiseta...'
+  ];
+  fraseActualIndex: number = 0;
+  private intervalFrases: any;
 
   private categoryMap: Record<string, CategoryMeta> = {
     backend: { id: 'backend', label: 'Backend & APIs', icon: 'bi-hdd-network', badgeClass: 'bg-primary-subtle text-primary' },
@@ -35,10 +47,40 @@ export class ProyectosComponent implements OnInit {
     this.isLogged = !!this.tokenService.getToken();
   }
 
+  ngOnDestroy(): void {
+    this.detenerRotacionFrases();
+  }
+
   cargarProyecto(): void {
-    this.sProyecto.lista().subscribe(data => {
-      this.proyectos = data;
+    this.state = 'loading';
+    this.iniciarRotacionFrases();
+    this.sProyecto.lista().subscribe({
+      next: (data) => {
+        this.proyectos = data;
+        this.state = 'success';
+        this.detenerRotacionFrases();
+      },
+      error: (err) => {
+        console.error('Error al cargar proyectos:', err);
+        this.state = 'error';
+        this.detenerRotacionFrases();
+      }
     });
+  }
+
+  private iniciarRotacionFrases(): void {
+    this.detenerRotacionFrases();
+    this.fraseActualIndex = 0;
+    this.intervalFrases = setInterval(() => {
+      this.fraseActualIndex = (this.fraseActualIndex + 1) % this.frasesEspera.length;
+    }, 3800);
+  }
+
+  private detenerRotacionFrases(): void {
+    if (this.intervalFrases) {
+      clearInterval(this.intervalFrases);
+      this.intervalFrases = null;
+    }
   }
 
   setFiltro(filtro: string): void {

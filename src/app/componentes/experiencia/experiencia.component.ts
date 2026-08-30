@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Experiencia } from 'src/app/model/experiencia';
 import { SExperienciaService } from 'src/app/service/s-experiencia.service';
 import { TokenService } from 'src/app/service/token.service';
+import { LoadingState } from 'src/app/model/loading-state';
 
 @Component({
   selector: 'app-experiencia',
@@ -11,6 +12,7 @@ import { TokenService } from 'src/app/service/token.service';
 })
 export class ExperienciaComponent implements OnInit {
   expe: Experiencia[] = [];
+  state: LoadingState = 'loading';
   isLogged = false;
 
   constructor(private sExperiencia: SExperienciaService, private tokenService: TokenService) {}
@@ -21,8 +23,16 @@ export class ExperienciaComponent implements OnInit {
   }
 
   cargarExperiencia(): void {
-    this.sExperiencia.lista().subscribe(data => {
-      this.expe = data;
+    this.state = 'loading';
+    this.sExperiencia.lista().subscribe({
+      next: (data) => {
+        this.expe = data;
+        this.state = 'success';
+      },
+      error: (err) => {
+        console.error('Error al cargar experiencia:', err);
+        this.state = 'error';
+      }
     });
   }
 
