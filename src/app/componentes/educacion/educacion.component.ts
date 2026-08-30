@@ -2,42 +2,55 @@ import { Component, OnInit } from '@angular/core';
 import { Educacion } from 'src/app/model/educacion';
 import { SEducacionService } from 'src/app/service/s-educacion.service';
 import { TokenService } from 'src/app/service/token.service';
+import { LoadingState } from 'src/app/model/loading-state';
 
 @Component({
-    selector: 'app-educacion',
-    templateUrl: './educacion.component.html',
-    styleUrls: ['./educacion.component.css'],
-    standalone: false
+  selector: 'app-educacion',
+  templateUrl: './educacion.component.html',
+  styleUrls: ['./educacion.component.css'],
+  standalone: false
 })
 export class EducacionComponent implements OnInit {
   educacion: Educacion[] = [];
-
-  constructor(private sEducacion: SEducacionService, private tokenService: TokenService){ }
-  
+  state: LoadingState = 'loading';
   isLogged = false;
+
+  constructor(
+    private sEducacion: SEducacionService,
+    private tokenService: TokenService
+  ) {}
 
   ngOnInit(): void {
     this.cargarEducacion();
-    if (this.tokenService.getToken()){
-      this.isLogged = true;
-    }
-    else{
-      this.isLogged = false;
-    }
+    this.isLogged = !!this.tokenService.getToken();
   }
 
-  cargarEducacion():void{
-    this.sEducacion.lista().subscribe(data => {this.educacion = data;} )
+  cargarEducacion(): void {
+    this.state = 'loading';
+    this.sEducacion.lista().subscribe({
+      next: (data) => {
+        this.educacion = data;
+        this.state = 'success';
+      },
+      error: (err) => {
+        console.error('Error al cargar educación:', err);
+        this.state = 'error';
+      }
+    });
   }
 
-  delete(id?:number){
-    if(id != undefined){
-      this.sEducacion.delete(id).subscribe(data => {
-        this.cargarEducacion();
-        }, err=> {
-        alert("No se pudo borrar la educacion");
+  delete(id?: number): void {
+    if (id != undefined) {
+      if (confirm('¿Estás seguro de que deseas eliminar esta educación?')) {
+        this.sEducacion.delete(id).subscribe({
+          next: () => {
+            this.cargarEducacion();
+          },
+          error: () => {
+            alert('No se pudo borrar la educación');
+          }
         });
+      }
     }
   }
-
 }

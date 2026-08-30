@@ -19,8 +19,9 @@
     </div>
 
     <!-- Education Grid -->
-    <div class="row g-4 justify-content-center">
-      @for (Educacion of educacion; track Educacion.id) {
+    <!-- ESTADO 1: CARGANDO -->
+    @if (state === 'loading') {
+      <div class="row g-4 justify-content-center">
         <div class="col-md-6 col-lg-5">
           <div class="card-modern edu-card p-4 h-100 d-flex flex-column justify-content-between">
             <div>
@@ -28,38 +29,101 @@
                 <div class="edu-icon-badge">
                   <i class="bi bi-mortarboard-fill"></i>
                 </div>
-                
-                @if (isLogged) {
-                  <div class="d-flex gap-2">
-                    <button class="btn-action-admin edit" title="Editar educación" [routerLink]="['/editedu', Educacion.id]">
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
-                    <button class="btn-action-admin delete" title="Eliminar educación" (click)="delete(Educacion.id)">
-                      <i class="bi bi-trash3-fill"></i>
-                    </button>
-                  </div>
-                }
               </div>
-
-              <h3 class="edu-title mb-1">{{ Educacion.tituloE }}</h3>
-              <h4 class="edu-institution text-secondary mb-3">{{ Educacion.institucionE }}</h4>
+              <h3 class="edu-title mb-1">🎓 Quitandole polvo a los títulos...</h3>
+              <h4 class="edu-institution text-secondary mb-3">Sincronizando antecedentes</h4>
+              <p class="text-secondary small mb-3">
+                Cargando certificaciones y formación académica mientras el backend termina de despertarse.
+              </p>
             </div>
-
-            <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-auto edu-footer">
-              <span class="edu-status-badge">
-                {{ Educacion.estadoE }}
-              </span>
-              <span class="edu-years text-muted">
-                <i class="bi bi-calendar3 me-1"></i> {{ Educacion.fechaInicio }} — {{ Educacion.fechaFin }}
-              </span>
+            <div class="pt-3 border-top mt-auto">
+              <div class="wake-progress-track m-0" style="max-width: 100%;">
+                <div class="wake-progress-bar"></div>
+              </div>
             </div>
           </div>
         </div>
-      } @empty {
-        <div class="col-12 text-center py-4">
-          <p class="text-muted">No se registran antecedentes académicos cargados.</p>
+
+        <!-- Tarjeta 2: Skeleton complementario idéntico a edu-card -->
+        <div class="col-md-6 col-lg-5">
+          <div class="card-modern edu-card skeleton-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+                <div class="skeleton-box" style="width: 42px; height: 42px; border-radius: 12px;"></div>
+              </div>
+              <div class="skeleton-box skeleton-title mb-2"></div>
+              <div class="skeleton-box skeleton-text w-50 mb-4"></div>
+            </div>
+            <div class="pt-3 border-top mt-auto d-flex justify-content-between align-items-center">
+              <div class="skeleton-box skeleton-pill"></div>
+              <div class="skeleton-box skeleton-pill w-25"></div>
+            </div>
+          </div>
         </div>
-      }
-    </div>
+      </div>
+    }
+
+    <!-- ESTADO 2: ERROR -->
+    @else if (state === 'error') {
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="card-modern edu-card p-4 h-100 text-center d-flex flex-column justify-content-center">
+            <h4 class="edu-title mb-2">Error de sincronización</h4>
+            <p class="text-muted mb-3">No se pudo cargar la información académica.</p>
+            <div>
+              <button type="button" class="btn btn-sm btn-outline-modern" (click)="cargarEducacion()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Reintentar conexión
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ESTADO 3: ÉXITO -->
+    @else if (state === 'success') {
+      <div class="row g-4 justify-content-center">
+        @for (Educacion of educacion; track Educacion.id) {
+          <div class="col-md-6 col-lg-5">
+            <div class="card-modern edu-card p-4 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+                  <div class="edu-icon-badge">
+                    <i class="bi bi-mortarboard-fill"></i>
+                  </div>
+                  
+                  @if (isLogged) {
+                    <div class="d-flex gap-2">
+                      <button class="btn-action-admin edit" title="Editar educación" [routerLink]="['/editedu', Educacion.id]">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="btn-action-admin delete" title="Eliminar educación" (click)="delete(Educacion.id)">
+                        <i class="bi bi-trash3-fill"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+
+                <h3 class="edu-title mb-1">{{ Educacion.tituloE }}</h3>
+                <h4 class="edu-institution text-secondary mb-3">{{ Educacion.institucionE }}</h4>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-auto edu-footer">
+                <span class="edu-status-badge">
+                  {{ Educacion.estadoE }}
+                </span>
+                <span class="edu-years text-muted">
+                  <i class="bi bi-calendar3 me-1"></i> {{ Educacion.fechaInicio }} — {{ Educacion.fechaFin }}
+                </span>
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <div class="col-12 text-center py-4">
+            <p class="text-muted">No se registran antecedentes académicos cargados.</p>
+          </div>
+        }
+      </div>
+    }
   </div>
 </section>

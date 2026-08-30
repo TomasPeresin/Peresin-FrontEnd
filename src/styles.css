@@ -393,3 +393,125 @@ a:hover {
   margin-bottom: 0.4rem;
 }
 
+/* ==========================================================================
+   Skeleton Shimmer Placeholders (Global)
+   ========================================================================== */
+.skeleton-card {
+  pointer-events: none;
+  border-color: var(--border-color) !important;
+  opacity: 0.85;
+}
+
+.skeleton-box {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface-secondary) 25%,
+    var(--bg-surface-hover) 50%,
+    var(--bg-surface-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s infinite linear;
+  border-radius: 6px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ==========================================================================
+   Server Wake Card & Loading Indicators (Global)
+   ========================================================================== */
+.section-wake-card {
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-secondary) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.wake-icon-pulse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--highlight-bg);
+  animation: pulse-glow-global 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-glow-global {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.35);
+    transform: scale(0.96);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
+    transform: scale(1.04);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    transform: scale(0.96);
+  }
+}
+
+.wake-title-sm {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.wake-subtitle-sm {
+  font-size: 0.9rem;
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.wake-status-pill {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--accent-primary);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.wake-progress-track {
+  width: 100%;
+  max-width: 320px;
+  height: 4px;
+  background-color: var(--border-color);
+  border-radius: 999px;
+  margin: 1rem auto 0;
+  overflow: hidden;
+}
+
+.wake-progress-bar {
+  width: 45%;
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: 999px;
+  animation: wake-bar-slide 1.8s infinite ease-in-out;
+}
+
+@keyframes wake-bar-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(120%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+
+
