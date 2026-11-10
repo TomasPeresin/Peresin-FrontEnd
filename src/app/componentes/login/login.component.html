@@ -34,10 +34,48 @@
           <!-- Formulario de Login -->
           <form *ngIf="!isLogged" #f="ngForm" (ngSubmit)="onLogin()" novalidate class="auth-form mt-4">
             
-            <!-- Mensaje de Error -->
-            <div *ngIf="isLoginFail" class="alert alert-danger d-flex align-items-center gap-2 mb-4" role="alert">
-              <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
-              <div class="small">{{ errMsj }}</div>
+            <!-- Tarjeta de Bloqueo Temporal (5 intentos superados) -->
+            <div *ngIf="isLocked" class="lockout-banner mb-4" role="alert">
+              <div class="d-flex align-items-center gap-3">
+                <div class="lockout-icon">
+                  <i class="bi bi-shield-lock-fill"></i>
+                </div>
+                <div>
+                  <h6 class="lockout-title mb-1">Acceso bloqueado temporalmente</h6>
+                  <p class="lockout-desc mb-2">
+                    Por seguridad ante múltiples intentos fallidos, el inicio de sesión se habilitará en:
+                  </p>
+                  <div class="lockout-timer">
+                    <i class="bi bi-clock-history me-1"></i>
+                    <span>{{ tiempoBloqueoFormateado }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mensaje de Error e Indicador de Intentos -->
+            <div *ngIf="isLoginFail && !isLocked" class="alert alert-danger d-flex align-items-start gap-2 mb-3" role="alert">
+              <i class="bi bi-exclamation-triangle-fill flex-shrink-0 mt-1"></i>
+              <div class="small w-100">
+                <div>{{ errMsj }}</div>
+                <div *ngIf="intentosRestantes < maxAttempts" class="attempts-pill mt-2">
+                  <i class="bi bi-shield-exclamation me-1"></i>
+                  Intentos restantes antes del bloqueo: <strong>{{ intentosRestantes }} de {{ maxAttempts }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Honeypot invisible para atrapar bots automatizados -->
+            <div class="hp-field-trap" aria-hidden="true">
+              <label for="website_url">Website</label>
+              <input
+                type="text"
+                id="website_url"
+                name="website_url"
+                [(ngModel)]="honeypot"
+                tabindex="-1"
+                autocomplete="off"
+              />
             </div>
 
             <!-- Campo Usuario -->
@@ -56,6 +94,7 @@
                   placeholder="Ingresa tu usuario"
                   required
                   autocomplete="username"
+                  [disabled]="isLocked || isLoading"
                 />
               </div>
             </div>
@@ -81,6 +120,7 @@
                   placeholder="Ingresa tu contraseña"
                   required
                   autocomplete="current-password"
+                  [disabled]="isLocked || isLoading"
                 />
                 <button
                   type="button"
@@ -88,21 +128,59 @@
                   (click)="toggleShowPassword()"
                   [title]="showPassword ? 'Ocultar contraseña' : 'Ver contraseña'"
                   tabindex="-1"
+                  [disabled]="isLocked"
                 >
                   <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
                 </button>
               </div>
             </div>
 
+            <!-- Verificación Anti-Bots (Captcha en Canvas) -->
+            <div *ngIf="!isLocked" class="form-group mb-3 captcha-wrapper">
+              <label class="form-label-custom" for="captchaInput">
+                <i class="bi bi-shield-check me-1"></i> Verificación de Seguridad
+              </label>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <div class="captcha-canvas-box" (click)="generarCaptcha()" title="Haz clic para generar otro código">
+                  <canvas #captchaCanvas width="145" height="44"></canvas>
+                </div>
+                <button
+                  type="button"
+                  class="btn-refresh-captcha"
+                  (click)="generarCaptcha()"
+                  title="Generar nuevo código"
+                  [disabled]="isLoading"
+                >
+                  <i class="bi bi-arrow-clockwise"></i>
+                </button>
+                <div class="flex-grow-1">
+                  <input
+                    type="text"
+                    id="captchaInput"
+                    name="captchaInput"
+                    class="form-control form-control-custom captcha-input"
+                    [(ngModel)]="captchaInput"
+                    placeholder="Código"
+                    maxlength="5"
+                    required
+                    autocomplete="off"
+                    [disabled]="isLoading"
+                  />
+                </div>
+              </div>
+              <small class="captcha-hint">Escribe los 5 caracteres de la imagen para confirmar que eres humano.</small>
+            </div>
+
             <!-- Botón Submit -->
             <button
-              class="btn btn-primary-modern w-100 justify-content-center py-2 mt-4"
+              class="btn btn-primary-modern w-100 justify-content-center py-2 mt-3"
               type="submit"
-              [disabled]="isLoading"
+              [disabled]="isLoading || isLocked"
             >
               <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
-              <i *ngIf="!isLoading" class="bi bi-box-arrow-in-right me-1"></i>
-              {{ isLoading ? 'Iniciando sesión...' : 'Ingresar' }}
+              <i *ngIf="!isLoading && !isLocked" class="bi bi-box-arrow-in-right me-1"></i>
+              <i *ngIf="isLocked" class="bi bi-lock-fill me-1"></i>
+              {{ isLocked ? 'Bloqueado (' + tiempoBloqueoFormateado + ')' : (isLoading ? 'Iniciando sesión...' : 'Ingresar') }}
             </button>
 
             <!-- Separador -->
